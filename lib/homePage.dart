@@ -7,20 +7,13 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin{
- TabController _tabController;
- 
- final  List<Tab> tabList = [
-    Tab(
-      text: 'Tab no 1',
-    ),
-    Tab(
-      text: 'Tab no 2',
-    )
-  ];
- void initState() {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: tabList.length);
+    _tabController = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -87,27 +80,60 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               Expanded(
                   flex: 3,
                   child: Column(
+                    
+                    
                     children: <Widget>[
                       Container(
-                        decoration: new BoxDecoration(
-                            color: Theme.of(context).primaryColor),
+                        decoration:
+                            new BoxDecoration(color: Colors.transparent),
                         child: new TabBar(
-                        
-                          controller: _tabController,
-                          tabs: tabList),
+                          
+                          labelStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.bold,) ,
+                          isScrollable: true,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicatorColor: Colors.green,
+                            labelPadding: EdgeInsets.symmetric(horizontal: 18),
+                            labelColor: Colors.black,
+                            unselectedLabelStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18
+                            ),
+                           
+                            controller: _tabController,
+                            tabs: [
+                              Tab(
+                                text: 'लोकप्रिय',
+                              ),
+                              Tab(
+                                text: 'सागसब्जी',
+                              ),
+                              Tab(
+                                text: 'फल',
+                              ),
+                              Tab(
+                                text: 'मासु',
+                              )
+                            ]),
                       ),
                       Expanded(
                           child: Container(
                         height: 20.0,
                         child: new TabBarView(
-                          
-                           controller: _tabController,
-                          children: [
-                            Tab(text: 'THis is tab 1',),
-                                                        Tab(text: 'THis is tab 2',)
-
-                          ]
-                        ),
+                            controller: _tabController,
+                            children: [
+                              Tab(
+                                text: 'Popular ',
+                              ),
+                              Tab(
+                                text: 'Vegetable ',
+                              ),
+                              Tab(
+                                text: 'Fruit',
+                              ),
+                              Tab(
+                                text: 'Mrat',
+                              )
+                            ]),
                       ))
                     ],
                   )),
