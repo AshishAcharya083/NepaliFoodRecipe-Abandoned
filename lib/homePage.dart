@@ -7,7 +7,22 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin{
+ TabController _tabController;
+ 
+ final  List<Tab> tabList = [
+    Tab(
+      text: 'Tab no 1',
+    ),
+    Tab(
+      text: 'Tab no 2',
+    )
+  ];
+ void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: tabList.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -73,13 +88,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   flex: 3,
                   child: Column(
                     children: <Widget>[
-                      Text('मुख्य परिकार hami ho '),
-                      GridView.count(
-                        crossAxisCount: 2,
-                        children: <Widget>[
+                      Container(
+                        decoration: new BoxDecoration(
+                            color: Theme.of(context).primaryColor),
+                        child: new TabBar(
+                        
+                          controller: _tabController,
+                          tabs: tabList),
+                      ),
+                      Expanded(
+                          child: Container(
+                        height: 20.0,
+                        child: new TabBarView(
                           
-                        ],
-                      )
+                           controller: _tabController,
+                          children: [
+                            Tab(text: 'THis is tab 1',),
+                                                        Tab(text: 'THis is tab 2',)
+
+                          ]
+                        ),
+                      ))
                     ],
                   )),
             ],

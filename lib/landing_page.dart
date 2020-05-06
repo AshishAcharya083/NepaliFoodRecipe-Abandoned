@@ -26,6 +26,8 @@ class _LandingPageState extends State<LandingPage> {
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           height: 50,
+
+          
           backgroundColor: Color(0xFFFFCE41),
           items: <Widget>[
             Icon(
