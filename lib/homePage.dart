@@ -40,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                   flex: 2,
                   child: ListView(
-                  
                     padding: EdgeInsets.symmetric(vertical: 10),
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
@@ -50,35 +49,39 @@ class _HomeScreenState extends State<HomeScreen> {
                             'https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
                         numberOfRecipe: '10',
                       ),
-                       CategoryCard(
+                      CategoryCard(
                         category: 'खाना ',
                         networkImage:
                             'https://www.thelongestwayhome.com/blog/wp-content/uploads/2012/04/Dal-Bhat-in-Nepal-tourist-version.jpg',
                         numberOfRecipe: '10',
                       ),
-                       CategoryCard(
+                      CategoryCard(
                         category: 'भोजन',
-
                         networkImage:
                             'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
                         numberOfRecipe: '10',
                       ),
-                       CategoryCard(
+                      CategoryCard(
                         category: 'Breakfast',
                         networkImage:
                             'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
                         numberOfRecipe: '10',
                       ),
                     ],
-                    
                   )),
               Expanded(
-
                   flex: 3,
-                  child:Column(children: <Widget>[
-                                      Text('मुख्य परिकार '),
-
-                  ],)),
+                  child: Column(
+                    children: <Widget>[
+                      Text('मुख्य परिकार hami ho '),
+                      GridView.count(
+                        crossAxisCount: 2,
+                        children: <Widget>[
+                          
+                        ],
+                      )
+                    ],
+                  )),
             ],
           ),
         ));
