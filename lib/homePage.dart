@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:floating_search_bar/floating_search_bar.dart';
 import 'searchbar.dart';
+import 'cards.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -52,24 +52,29 @@ class _HomeScreenState extends State<HomeScreen>
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       CategoryCard(
+                        elevation: 5,
                         category: 'खाजा  ',
                         networkImage:
                             'https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
                         numberOfRecipe: '10',
                       ),
                       CategoryCard(
+                        elevation: 5,
+                      
                         category: 'खाना ',
                         networkImage:
                             'https://www.thelongestwayhome.com/blog/wp-content/uploads/2012/04/Dal-Bhat-in-Nepal-tourist-version.jpg',
                         numberOfRecipe: '10',
                       ),
                       CategoryCard(
+                        elevation: 5,
                         category: 'भोजन',
                         networkImage:
                             'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
                         numberOfRecipe: '10',
                       ),
                       CategoryCard(
+                        elevation: 5,
                         category: 'Breakfast',
                         networkImage:
                             'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
@@ -80,25 +85,22 @@ class _HomeScreenState extends State<HomeScreen>
               Expanded(
                   flex: 3,
                   child: Column(
-                    
-                    
                     children: <Widget>[
                       Container(
                         decoration:
                             new BoxDecoration(color: Colors.transparent),
                         child: new TabBar(
-                          
-                          labelStyle:TextStyle(fontSize: 20,fontWeight: FontWeight.bold,) ,
-                          isScrollable: true,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          indicatorColor: Colors.green,
+                            labelStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            isScrollable: true,
+                            indicatorSize: TabBarIndicatorSize.label,
+                            indicatorColor: Colors.green,
                             labelPadding: EdgeInsets.symmetric(horizontal: 18),
                             labelColor: Colors.black,
-                            unselectedLabelStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18
-                            ),
-                           
+                            unselectedLabelStyle:
+                                TextStyle(color: Colors.grey, fontSize: 18),
                             controller: _tabController,
                             tabs: [
                               Tab(
@@ -121,9 +123,20 @@ class _HomeScreenState extends State<HomeScreen>
                         child: new TabBarView(
                             controller: _tabController,
                             children: [
-                              Tab(
-                                text: 'Popular ',
-                              ),
+                              ListView.builder(
+                                itemCount: 5,
+                                scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical:10.0),
+                                  child: CategoryCard(
+                                    elevation: 1,
+                                    
+                                      networkImage:
+                                          'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
+                                      category: 'berak'),
+                                );
+                              }),
                               Tab(
                                 text: 'Vegetable ',
                               ),
@@ -139,48 +152,6 @@ class _HomeScreenState extends State<HomeScreen>
                   )),
             ],
           ),
-        ));
-  }
-}
-
-class CategoryCard extends StatelessWidget {
-  final String networkImage;
-  final String category;
-  final String numberOfRecipe;
-
-  CategoryCard(
-      {@required this.networkImage,
-      @required this.category,
-      this.numberOfRecipe});
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                height: 120,
-                width: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: NetworkImage(networkImage), fit: BoxFit.cover)),
-              ),
-            ),
-            Text(
-              category,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
-            ),
-            Text(
-              '$numberOfRecipe नुस्खा ',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
         ));
   }
 }

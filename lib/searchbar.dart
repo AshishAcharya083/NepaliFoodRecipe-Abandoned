@@ -13,7 +13,7 @@ class SearchBar extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-               //TODO: code the drawer menu
+               //code the drawer menu 
               },
               child: Icon(
                 Icons.search,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'homePage.dart';
+import 'list_screen.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -10,9 +11,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   List tabs = [
     HomeScreen(),
-    Center(
-      child: Text('What\'s on my refregenator'),
-    ),
+   ListCard(),
     Center(
       child: Text("User profile"),
     ),
@@ -27,12 +26,13 @@ class _LandingPageState extends State<LandingPage> {
         bottomNavigationBar: CurvedNavigationBar(
           height: 50,
 
-          
-          backgroundColor: Color(0xFFFFCE41),
+          // 0xFFFFCE41
+          backgroundColor: Color(0xFFFFC529),
           items: <Widget>[
             Icon(
               Icons.home,
               size: 30,
+              
             ),
             Icon(
               Icons.list,
