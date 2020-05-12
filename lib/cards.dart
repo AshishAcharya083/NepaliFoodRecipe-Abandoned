@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 
+
 class CategoryCard extends StatelessWidget {
   final String networkImage;
   final String category;
@@ -10,12 +11,11 @@ class CategoryCard extends StatelessWidget {
       {@required this.networkImage,
       @required this.category,
       this.numberOfRecipe,
-      this.elevation
-      
-      });
+      this.elevation});
   @override
   Widget build(BuildContext context) {
     return Card(
+      // color: Color(0xFFFFC529),
         elevation: elevation,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Column(
@@ -24,8 +24,7 @@ class CategoryCard extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(
                   minHeight: 20,
-                    minWidth: 150,
-                    
+                  minWidth: 150,
                 ),
                 // height: 120,
                 // width: 150,

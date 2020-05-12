@@ -3,8 +3,11 @@ import 'package:food/landing_page.dart';
 
 void main() => runApp(MaterialApp(
  theme: ThemeData(
-accentColor: Color(0xFFFFC529)
+   
+accentColor: Color(0xFFFFC529),
+scaffoldBackgroundColor: Colors.white70
  ),
+
       home: MyApp(),
     ));
 
