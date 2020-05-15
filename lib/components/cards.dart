@@ -6,17 +6,17 @@ class CategoryCard extends StatelessWidget {
   final String networkImage;
   final String category;
   final String numberOfRecipe;
-  final double elevation;
+ 
   CategoryCard(
       {@required this.networkImage,
       @required this.category,
       this.numberOfRecipe,
-      this.elevation});
+      });
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       // color: Color(0xFFFFC529),
-        elevation: elevation,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Column(
           children: <Widget>[
@@ -24,7 +24,8 @@ class CategoryCard extends StatelessWidget {
               child: Container(
                 constraints: BoxConstraints(
                   minHeight: 20,
-                  minWidth: 150,
+                  
+                  minWidth: 180,
                 ),
                 // height: 120,
                 // width: 150,

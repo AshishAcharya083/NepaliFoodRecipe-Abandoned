@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food/landing_page.dart';
+import 'package:food/screens/landing_page.dart';
 
 void main() => runApp(MaterialApp(
- theme: ThemeData(
-   
-accentColor: Color(0xFFFFC529),
-scaffoldBackgroundColor: Colors.white70
- ),
-
+      theme: ThemeData(
+        accentColor: Color(0xFFFFC529),
+        scaffoldBackgroundColor: Colors.white70,
+        
+      ),
       home: MyApp(),
     ));
 

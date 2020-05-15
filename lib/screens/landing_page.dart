@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-// import 'homePage.dart';
+import 'homePage.dart';
 import 'list_screen.dart';
 import 'cooking_screen.dart';
 
@@ -11,12 +11,9 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   List tabs = [
-    // HomeScreen(),
-   CookingScreen(),
-   ListCard(),
-    Center(
-      child: Text("User profile"),
-    ),
+    HomeScreen(),
+    ListCard(),
+    CookingScreen(),
   ];
 
   int _currentIndex = 0;
@@ -25,17 +22,13 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
         bottomNavigationBar: CurvedNavigationBar(
           height: 50,
-
-          // 0xFFFFCE41
           backgroundColor: Color(0xFFFFC529),
           items: <Widget>[
             Icon(
               Icons.home,
               size: 30,
-              
             ),
             Icon(
               Icons.list,
