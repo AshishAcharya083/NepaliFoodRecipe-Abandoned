@@ -43,7 +43,7 @@ final List<RecipeStructure> recipeList = [
       name: 'भारतीय चिकन मद्रास करी',
       ename: 'Indian Chicken Madras Curry Recipe',
       type: 'nveg',
-      image: 'https://lh3.googleusercontent.com/proxy/AyZtfCWLuDgC44j9msul3lxbHwp1TCEaZbJi6SjfuCI-aB-XEGsfBw3yBnB6yxq4xFt9w5X-x3aesdUUKlo-fsROm6v0YSrq2hGTbGQRsefdhgUGbTHuvDqeReHkoZf7jDAMsEqwXARB',
+      image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1524&q=80',
       ingredients: {
         'chicken':
             '४  छालाविहीन, हड्डी रहित कुखुराको स्तनहरू १ १/२ ईन्च अंशहरूमा काटिन्छ   र सुक्खा राखिन्छ',

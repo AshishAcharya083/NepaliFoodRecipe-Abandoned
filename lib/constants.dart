@@ -7,4 +7,16 @@ final List<BoxShadow> kboxShadow = [
 ];
 
 final kNepaliTextStyle = GoogleFonts.getFont('Hind',
-    textStyle: TextStyle(fontSize: 20, letterSpacing: 1.5, wordSpacing: 1.5));
+    textStyle: TextStyle(fontSize: 20,
+    fontWeight: FontWeight.bold,
+     letterSpacing: 1.5, wordSpacing: 1.5));
+
+
+final kEnglishTextStyle = GoogleFonts.getFont('Hind',
+
+textStyle: TextStyle(
+  letterSpacing: 1.2,
+  fontWeight: FontWeight.bold,
+  fontSize: 20
+
+));
