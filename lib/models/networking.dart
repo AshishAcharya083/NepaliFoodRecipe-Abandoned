@@ -11,7 +11,7 @@ class NetworkHelper {
 
   NetworkHelper({this.search});
 
-  Future getJsonData() async {
+  Future<String> getJsonData() async {
     http.Response response = await http.get(
         'https://api.unsplash.com/search/photos?per_page=1&client_id=pnddBzwFT4wI7MvYeIWucAV-i_cQ0GZ141lte8niAdY&query=$search');
 

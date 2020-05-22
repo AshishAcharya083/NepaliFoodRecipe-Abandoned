@@ -43,61 +43,67 @@ class RecipeListWheel extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onTap: (){print('hello!');},
-                    child: Padding(
+            
+            onTap: (){print('hello!');
+            
+            },
+                    child: Tooltip(
+                      message: 'photo by amirali mirhashemian',
+                                          child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Container(
                 height: 240,
                 color: Colors.transparent,
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.blueGrey,
-                            image: DecorationImage(
-                                image: CachedNetworkImageProvider(
-                                    '${recipeList[index].image}'),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: recipeList[index].type == 'nveg'
-                                    ? Colors.red.withOpacity(0.9)
-                                    : Colors.green.withOpacity(0.9),
-                                spreadRadius: 3,
-                                blurRadius: 10,
-                              )
-                            ]),
-                        
-                      ),
-                    ),
-                    Expanded(
+                      Expanded(
                         child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: kboxShadow,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(20),
-                              bottomRight: Radius.circular(20))),
-                      height: 120,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            recipeList[index].name,
-                            textAlign: TextAlign.center,
-                            style: kNepaliTextStyle.copyWith(
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text('Veg'),
-                        ],
+                          decoration: BoxDecoration(
+                              color: Colors.blueGrey,
+                              image: DecorationImage(
+                                  image: CachedNetworkImageProvider(
+                                      '${recipeList[index].image}'),
+                                  fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: recipeList[index].type == 'nveg'
+                                      ? Colors.red.withOpacity(0.9)
+                                      : Colors.green.withOpacity(0.9),
+                                  spreadRadius: 3,
+                                  blurRadius: 10,
+                                )
+                              ]),
+                          
+                        ),
                       ),
-                    ))
+                      Expanded(
+                          child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: kboxShadow,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20),
+                                bottomRight: Radius.circular(20))),
+                        height: 120,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              recipeList[index].name,
+                              textAlign: TextAlign.center,
+                              style: kNepaliTextStyle.copyWith(
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text('Veg'),
+                          ],
+                        ),
+                      ))
                   ],
                 ),
               ),
             ),
+                    ),
           ),
         );
       },
@@ -141,7 +147,7 @@ class RecipeListWheel extends StatelessWidget {
 //                   : Colors.green.withOpacity(0.9),
 //                   spreadRadius: 3,
 //                   blurRadius: 10,
-//             )
+//             ) 
 //           ]),
 //                   ),
 //               ),
@@ -150,7 +156,7 @@ class RecipeListWheel extends StatelessWidget {
 //         Expanded(
 //             child: Container(
 //           decoration: BoxDecoration(
-//                 color: Colors.white,
+//                 color: Colors.white,  
 //                 boxShadow: kboxShadow,
 //                 borderRadius: BorderRadius.only(
 //           topRight: Radius.circular(20),

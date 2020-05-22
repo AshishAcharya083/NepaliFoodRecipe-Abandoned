@@ -1,9 +1,9 @@
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
-import 'package:http/http.dart' as http;
+import '../models/networking.dart';
 
 class CookingScreen extends StatefulWidget {
   @override
@@ -11,29 +11,6 @@ class CookingScreen extends StatefulWidget {
 }
 
 class _CookingScreenState extends State<CookingScreen> {
-  String imageLink;
-
-   getJsonData(String name) async {
-    http.Response response = await http.get(
-        'https://api.unsplash.com/search/photos?per_page=1&client_id=pnddBzwFT4wI7MvYeIWucAV-i_cQ0GZ141lte8niAdY&query=${name}');
-    
-    var convertDatatoJson = jsonDecode(response.body);
-    
-
-   setState(() {
-     imageLink = convertDatatoJson['results'][0]['urls']['small'];
-   });
-    return imageLink;
-  }
-
-  @override
-  void initState() {
-    
-    super.initState();
-    // this.getJsonData();
-    
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,8 +136,13 @@ class _CookingScreenState extends State<CookingScreen> {
                           shape: CircleBorder(
                               side: BorderSide(color: Colors.white)),
                           child: Center(
-                            child: ingridientWidget(index),
-                          )),
+                              child:  FutureBuilder(
+                                future: getImageUrl(recipeList[0].ingredients.keys.elementAt(index)),
+                                builder: (context,futureSnapshot){
+                                  if(!futureSnapshot.hasData){
+                                    return CupertinoActivityIndicator();
+                                  }
+                                  return futureSnapshot.data;}))),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: FittedBox(
@@ -200,12 +182,13 @@ class _CookingScreenState extends State<CookingScreen> {
       )),
     );
   }
+  Future<Widget> getImageUrl(String imageName) async {
+    NetworkHelper networkHelper = NetworkHelper(search: imageName);
+    var decodedData = await networkHelper.getJsonData();
 
-  Widget ingridientWidget(int index){
-  //  await getJsonData(recipeList[0].ingredients.keys.elementAt(index));
-    return  CircleAvatar(
-                              backgroundImage: NetworkImage( getJsonData(recipeList[0].ingredients.keys.elementAt(index))),
-                              radius: 25,
-                            );
-    } 
+   
+    return CircleAvatar(
+                            backgroundImage: CachedNetworkImageProvider(decodedData),
+                          );
+  }
 }
