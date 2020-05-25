@@ -48,13 +48,13 @@ Container(
               category,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 17,
+                fontSize: 20,
               ),
             ),
-            Text(
-              '$numberOfRecipe नुस्खा ',
-              style: TextStyle(color: Colors.grey),
-            ),
+            // Text(
+            //   '$numberOfRecipe नुस्खा ',
+            //   style: TextStyle(color: Colors.grey,fontSize: 10),
+            // ),
           ],
         ));
   }

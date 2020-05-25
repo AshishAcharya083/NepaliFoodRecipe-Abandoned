@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/components/searchbar.dart';
 import 'package:food/models/recipe_list.dart';
+import 'package:food/screens/cooking_screen.dart';
 
 class ListCard extends StatefulWidget {
   @override
@@ -44,7 +45,9 @@ class RecipeListWheel extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             
-            onTap: (){print('hello!');
+            onTap: (){
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CookingScreen(indexOfFood: index,)));
             
             },
                     child: Tooltip(

@@ -6,14 +6,28 @@ import 'package:food/models/recipe_list.dart';
 import '../models/networking.dart';
 
 class CookingScreen extends StatefulWidget {
+  final int indexOfFood;
+  CookingScreen({@required this.indexOfFood});
+
   @override
   _CookingScreenState createState() => _CookingScreenState();
 }
 
 class _CookingScreenState extends State<CookingScreen> {
   @override
+  @override
   Widget build(BuildContext context) {
+    print('passed index value is${widget.indexOfFood}');
     return Scaffold(
+    
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 20,right: 20),
+        child: FloatingActionButton(onPressed: (){},
+        
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Icon(Icons.timer,size: 30,),
+        ),
+      ),
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
@@ -42,7 +56,7 @@ class _CookingScreenState extends State<CookingScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Text(
-                          recipeList[0].name,
+                          recipeList[widget.indexOfFood].name,
                           style: kNepaliTextStyle,
                         )
                       ],
@@ -55,7 +69,8 @@ class _CookingScreenState extends State<CookingScreen> {
                             bottomRight: Radius.circular(30),
                             bottomLeft: Radius.circular(30)),
                         image: DecorationImage(
-                            image: AssetImage('images/burger.jpg'),
+                            image: NetworkImage(
+                                recipeList[widget.indexOfFood].image),
                             fit: BoxFit.cover)),
                   )),
             ),
@@ -68,7 +83,7 @@ class _CookingScreenState extends State<CookingScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
-                      recipeList[0].ename,
+                      recipeList[widget.indexOfFood].ename,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 30,
@@ -86,10 +101,12 @@ class _CookingScreenState extends State<CookingScreen> {
                           fontWeight: FontWeight.bold, color: Colors.grey),
                     ),
                   ),
+                
                   Divider(
                     thickness: 2,
                     indent: 20,
                     endIndent: 20,
+                    color: kMainColor,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
@@ -98,17 +115,17 @@ class _CookingScreenState extends State<CookingScreen> {
                       children: <Widget>[
                         Text(
                           'सामग्रीहरू',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          style:kNepaliTextStyle.copyWith(fontSize: 25)
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         CircleAvatar(
                           backgroundColor: Color(0xFFFFC529),
-                          maxRadius: 10,
+                          maxRadius: 13,
+
                           child: Text(
-                            '${recipeList[0].ingredients.length}',
+                            '${recipeList[widget.indexOfFood].ingredients.length}',
                             //Number of ingredients
                             style: TextStyle(fontSize: 15),
                           ),
@@ -127,68 +144,114 @@ class _CookingScreenState extends State<CookingScreen> {
                 crossAxisCount: 2,
                 childAspectRatio: 2),
             delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Card(
-                          elevation: 7,
-                          shape: CircleBorder(
-                              side: BorderSide(color: Colors.white)),
-                          child: Center(
-                              child:  FutureBuilder(
-                                future: getImageUrl(recipeList[0].ingredients.keys.elementAt(index)),
-                                builder: (context,futureSnapshot){
-                                  if(!futureSnapshot.hasData){
+                (BuildContext context, int index) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Card(
+                        elevation: 7,
+                        shape:
+                            CircleBorder(side: BorderSide(color: kMainColor)),
+                        child: Center(
+                            child: FutureBuilder<Widget>(
+                                future: getImageUrl(
+                                    recipeList[widget.indexOfFood]
+                                        .ingredients
+                                        .keys
+                                        .elementAt(index)),
+                                builder: (context, futureSnapshot) {
+                                  if (!futureSnapshot.hasData) {
                                     return CupertinoActivityIndicator();
                                   }
-                                  return futureSnapshot.data;}))),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FittedBox(
-                          alignment: Alignment.center,
-                          child: Container(
-                              child: Text(
-                            recipeList[0].ingredients.values.elementAt(index),
-                            style: kNepaliTextStyle.copyWith(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-              childCount: recipeList[0].ingredients.length,
-            ),
+                                  return futureSnapshot.data;
+                                }))),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FittedBox(
+                        alignment: Alignment.center,
+                        child: Container(
+                            child: Text(
+                          recipeList[widget.indexOfFood]
+                              .ingredients
+                              .values
+                              .elementAt(index),
+                          style: kNepaliTextStyle.copyWith(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        )),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+                childCount:
+                    recipeList[widget.indexOfFood].ingredients.keys.length
+                ),
           ),
+          
           SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+              padding: EdgeInsets.only(top: 30,left: 15,right: 15,),
               sliver: SliverToBoxAdapter(
-                child: Text('पकाउने तरिका', style: kNepaliTextStyle),
+                child: Text('पकाउने तरिका : ', style: kNepaliTextStyle.copyWith(fontSize: 25)),
               )),
           SliverPadding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             sliver: SliverList(
-                delegate: SliverChildListDelegate(List.generate(20, (index) {
-              return Container(
-                height: 50,
-                width: 100,
-                child: Text('Hello it worked'),
-              );
+                delegate: SliverChildListDelegate(List.generate(
+                    recipeList[widget.indexOfFood].stepsForCooking.length,
+                    (index) {
+              print('The index inside cooking steps is $index');
+              return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Stack(
+                    children: <Widget>[
+                     
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                  child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.only(top: 30,left: 20,right: 20,bottom: 20),
+                            decoration: BoxDecoration(
+                              
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                    color: Color(0xFFf5f5f5),
+                                // color: kMainColor.withOpacity(0.6)),
+                            ),
+                            child: Text(recipeList[widget.indexOfFood].stepsForCooking[index],style: kNepaliTextStyle.copyWith(wordSpacing: 0),),
+                          ),
+                        ),
+                      ),
+                       Align(
+                        
+                        alignment: Alignment(-0.8,-1),
+                        child: CircleAvatar(
+                      child: Text('${index + 1}'),
+                          radius: 25,
+                          backgroundColor: kMainColor,
+                        ),
+                      ),
+                    ],
+                  ));
             }))),
           )
         ],
       )),
     );
   }
+
   Future<Widget> getImageUrl(String imageName) async {
     NetworkHelper networkHelper = NetworkHelper(search: imageName);
     var decodedData = await networkHelper.getJsonData();
 
-   
     return CircleAvatar(
-                            backgroundImage: CachedNetworkImageProvider(decodedData),
-                          );
+      radius: 25,
+      backgroundImage: CachedNetworkImageProvider(decodedData),
+    );
   }
 }
+
+

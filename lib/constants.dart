@@ -20,3 +20,6 @@ textStyle: TextStyle(
   fontSize: 20
 
 ));
+
+const kMainColor = Color(0xFFFFC529);
+
