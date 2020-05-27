@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "109156106684",
+    "firebase_url": "https://food-recipes-in-nepali.firebaseio.com",
+    "project_id": "food-recipes-in-nepali",
+    "storage_bucket": "food-recipes-in-nepali.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109156106684:android:65e20cdd66176ced072bb9",
+        "android_client_info": {
+          "package_name": "com.foodrecipesinnepali.food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109156106684-be2j55fpr8rlrtb44fubblh8s7thp1p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvk0hF1M4irnHlVt4hjjdgJYnb4QGtOVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109156106684-be2j55fpr8rlrtb44fubblh8s7thp1p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

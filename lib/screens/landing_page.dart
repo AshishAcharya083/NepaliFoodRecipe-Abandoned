@@ -4,6 +4,7 @@ import 'homePage.dart';
 import 'list_screen.dart';
 // import 'cooking_screen.dart';
 
+
 class LandingPage extends StatefulWidget {
   @override
   _LandingPageState createState() => _LandingPageState();
@@ -14,6 +15,7 @@ class _LandingPageState extends State<LandingPage> {
   List tabs = [
     
     HomeScreen(),
+    
     ListCard(),
     // CookingScreen(),
     Text('this is n0. 3')

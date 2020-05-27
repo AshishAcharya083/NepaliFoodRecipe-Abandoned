@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import '../models/networking.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class CookingScreen extends StatefulWidget {
   final int indexOfFood;
@@ -15,17 +16,39 @@ class CookingScreen extends StatefulWidget {
 
 class _CookingScreenState extends State<CookingScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<dynamic> getImage(BuildContext context, String image) async {
+    ImageProvider img;
+
+    final FirebaseStorage storage = FirebaseStorage(
+      app: FirebaseStorage.instance.app,
+      storageBucket: 'gs://food-recipes-in-nepali.appspot.com',
+    );
+    final imgRef = storage.ref().child('$image');
+    var imgUrl = await imgRef.getDownloadURL();
+
+    img = NetworkImage(imgUrl);
+    print("The image URl is $imgUrl");
+
+    return img;
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('passed index value is${widget.indexOfFood}');
     return Scaffold(
-    
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20,right: 20),
-        child: FloatingActionButton(onPressed: (){},
-        
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Icon(Icons.timer,size: 30,),
+        padding: const EdgeInsets.only(bottom: 20, right: 20),
+        child: FloatingActionButton(
+          onPressed: () {},
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Icon(
+            Icons.timer,
+            size: 30,
+          ),
         ),
       ),
       backgroundColor: Colors.white,
@@ -63,16 +86,26 @@ class _CookingScreenState extends State<CookingScreen> {
                     ),
                   ),
                   collapseMode: CollapseMode.parallax,
-                  background: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(30),
-                            bottomLeft: Radius.circular(30)),
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                recipeList[widget.indexOfFood].image),
-                            fit: BoxFit.cover)),
-                  )),
+                  background: FutureBuilder(
+                      future: getImage(context, '${recipeList[widget.indexOfFood].ename}.jpg'),
+                      builder: (context, snapshot) {
+                        // print("The snapshot's data is ${snapshot.data}");
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CupertinoActivityIndicator();
+                        }
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(30),
+                                    bottomLeft: Radius.circular(30)),
+                                image: DecorationImage(
+                                    image: snapshot.data, fit: BoxFit.cover)),
+                          );
+                        }
+                        return Container();
+                      })),
             ),
           ),
           SliverPadding(
@@ -101,7 +134,6 @@ class _CookingScreenState extends State<CookingScreen> {
                           fontWeight: FontWeight.bold, color: Colors.grey),
                     ),
                   ),
-                
                   Divider(
                     thickness: 2,
                     indent: 20,
@@ -113,17 +145,14 @@ class _CookingScreenState extends State<CookingScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Text(
-                          'सामग्रीहरू',
-                          style:kNepaliTextStyle.copyWith(fontSize: 25)
-                        ),
+                        Text('सामग्रीहरू',
+                            style: kNepaliTextStyle.copyWith(fontSize: 25)),
                         SizedBox(
                           width: 10,
                         ),
                         CircleAvatar(
                           backgroundColor: Color(0xFFFFC529),
                           maxRadius: 13,
-
                           child: Text(
                             '${recipeList[widget.indexOfFood].ingredients.length}',
                             //Number of ingredients
@@ -185,14 +214,17 @@ class _CookingScreenState extends State<CookingScreen> {
               );
             },
                 childCount:
-                    recipeList[widget.indexOfFood].ingredients.keys.length
-                ),
+                    recipeList[widget.indexOfFood].ingredients.keys.length),
           ),
-          
           SliverPadding(
-              padding: EdgeInsets.only(top: 30,left: 15,right: 15,),
+              padding: EdgeInsets.only(
+                top: 30,
+                left: 15,
+                right: 15,
+              ),
               sliver: SliverToBoxAdapter(
-                child: Text('पकाउने तरिका : ', style: kNepaliTextStyle.copyWith(fontSize: 25)),
+                child: Text('पकाउने तरिका : ',
+                    style: kNepaliTextStyle.copyWith(fontSize: 25)),
               )),
           SliverPadding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -200,36 +232,38 @@ class _CookingScreenState extends State<CookingScreen> {
                 delegate: SliverChildListDelegate(List.generate(
                     recipeList[widget.indexOfFood].stepsForCooking.length,
                     (index) {
-              print('The index inside cooking steps is $index');
               return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Stack(
                     children: <Widget>[
-                     
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Card(
                           elevation: 3,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                  child: Container(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Container(
                             width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.only(top: 30,left: 20,right: 20,bottom: 20),
+                            padding: EdgeInsets.only(
+                                top: 30, left: 20, right: 20, bottom: 20),
                             decoration: BoxDecoration(
-                              
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                    color: Color(0xFFf5f5f5),
-                                // color: kMainColor.withOpacity(0.6)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Color(0xFFf5f5f5),
+                              // color: kMainColor.withOpacity(0.6)),
                             ),
-                            child: Text(recipeList[widget.indexOfFood].stepsForCooking[index],style: kNepaliTextStyle.copyWith(wordSpacing: 0),),
+                            child: Text(
+                              recipeList[widget.indexOfFood]
+                                  .stepsForCooking[index],
+                              style: kNepaliTextStyle.copyWith(wordSpacing: 0),
+                            ),
                           ),
                         ),
                       ),
-                       Align(
-                        
-                        alignment: Alignment(-0.8,-1),
+                      Align(
+                        alignment: Alignment(-0.8, -1),
                         child: CircleAvatar(
-                      child: Text('${index + 1}'),
+                          child: Text('${index + 1}'),
                           radius: 25,
                           backgroundColor: kMainColor,
                         ),
@@ -253,5 +287,3 @@ class _CookingScreenState extends State<CookingScreen> {
     );
   }
 }
-
-
