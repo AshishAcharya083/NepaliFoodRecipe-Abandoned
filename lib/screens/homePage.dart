@@ -4,6 +4,7 @@ import 'package:food/components/searchbar.dart';
 import 'package:food/components/cards.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
+import 'package:food/models/recipe_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,23 +19,23 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
-     SystemChrome.setPreferredOrientations([
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
       // DeviceOrientation.landscapeLeft,
-  ]);
+    ]);
   }
 
   @override
-dispose(){
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  super.dispose();
-}
+  dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ dispose(){
                           autoPlay: true,
                           aspectRatio: 2,
                           height: 400),
-                      items: [1, 2, 3, 4, 5].map((i) {
+                      items: [1, 2, 3].map((i) {
                         return Builder(
                           builder: (BuildContext context) {
                             return Container(
@@ -75,7 +76,8 @@ dispose(){
                                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: AssetImage('images/burger.jpg'),
+                                        image: NetworkImage(
+                                            recipeList[i - 1].image),
                                         fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.amber));
@@ -84,9 +86,7 @@ dispose(){
                       }).toList(),
                     );
                   })),
-              Expanded(
-                  flex: 3,
-                  child: myTabBar()),
+              Expanded(flex: 3, child: myTabBar()),
             ],
           ),
         ));
@@ -94,68 +94,63 @@ dispose(){
 
   Column myTabBar() {
     return Column(
-                  children: <Widget>[
-                    Container(
-                      decoration:
-                          new BoxDecoration(color: Colors.transparent),
-                      child: new TabBar(
-                          labelStyle: GoogleFonts.getFont('Hind',
-                              textStyle: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          isScrollable: true,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          indicatorColor: Colors.green,
-                          labelPadding: EdgeInsets.symmetric(horizontal: 18),
-                          labelColor: Colors.black,
-                          unselectedLabelStyle:
-                              TextStyle(color: Colors.grey, fontSize: 18),
-                          controller: _tabController,
-                          tabs: [
-                            Tab(
-                              text: 'लोकप्रिय',
-                            ),
-                            Tab(
-                              text: 'सागसब्जी',
-                            ),
-                            Tab(
-                              text: 'फल',
-                            ),
-                            Tab(
-                              text: 'मासु',
-                            )
-                          ]),
-                    ),
-                    Expanded(
-                        child: Container(
-                      height: 20.0,
-                      child: new TabBarView(
-                          controller: _tabController,
-                          children: [
-                            ListView.builder(
-                                itemCount: 3,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10.0),
-                                    child: CategoryCard(
-                                        networkImage:
-                                            'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
-                                        category: 'momo'),
-                                  );
-                                }),
-                            Tab(
-                              text: 'Vegetable ',
-                            ),
-                            Tab(
-                              text: 'Fruit',
-                            ),
-                            Tab(
-                              text: 'Mrat',
-                            )
-                          ]),
-                    ))
-                  ],
-                );
+      children: <Widget>[
+        Container(
+          decoration: new BoxDecoration(color: Colors.transparent),
+          child: new TabBar(
+              labelStyle: GoogleFonts.getFont('Hind',
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorColor: Colors.green,
+              labelPadding: EdgeInsets.symmetric(horizontal: 18),
+              labelColor: Colors.black,
+              unselectedLabelStyle: TextStyle(color: Colors.grey, fontSize: 18),
+              controller: _tabController,
+              tabs: [
+                Tab(
+                  text: 'लोकप्रिय',
+                ),
+                Tab(
+                  text: 'सागसब्जी',
+                ),
+                Tab(
+                  text: 'फल',
+                ),
+                Tab(
+                  text: 'मासु',
+                )
+              ]),
+        ),
+        Expanded(
+            child: Container(
+          height: 20.0,
+          child: new TabBarView(controller: _tabController, children: [
+            ListView.builder(
+                itemCount: 3,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: CategoryCard(
+                        networkImage:
+                            'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
+                        category: 'momo'),
+                  );
+                }),
+            Tab(
+              text: 'Vegetable ',
+            ),
+            Tab(
+              text: 'Fruit',
+            ),
+            Tab(
+              text: 'Mrat',
+            )
+          ]),
+        ))
+      ],
+    );
   }
 }

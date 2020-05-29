@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import '../models/networking.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 
 class CookingScreen extends StatefulWidget {
   final int indexOfFood;
@@ -18,22 +18,6 @@ class _CookingScreenState extends State<CookingScreen> {
   @override
   void initState() {
     super.initState();
-  }
-
-  Future<dynamic> getImage(BuildContext context, String image) async {
-    ImageProvider img;
-
-    final FirebaseStorage storage = FirebaseStorage(
-      app: FirebaseStorage.instance.app,
-      storageBucket: 'gs://food-recipes-in-nepali.appspot.com',
-    );
-    final imgRef = storage.ref().child('$image');
-    var imgUrl = await imgRef.getDownloadURL();
-
-    img = NetworkImage(imgUrl);
-    print("The image URl is $imgUrl");
-
-    return img;
   }
 
   @override
@@ -86,26 +70,16 @@ class _CookingScreenState extends State<CookingScreen> {
                     ),
                   ),
                   collapseMode: CollapseMode.parallax,
-                  background: FutureBuilder(
-                      future: getImage(context, '${recipeList[widget.indexOfFood].ename}.jpg'),
-                      builder: (context, snapshot) {
-                        // print("The snapshot's data is ${snapshot.data}");
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CupertinoActivityIndicator();
-                        }
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30)),
-                                image: DecorationImage(
-                                    image: snapshot.data, fit: BoxFit.cover)),
-                          );
-                        }
-                        return Container();
-                      })),
+                  background: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(30),
+                              bottomLeft: Radius.circular(30)),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  recipeList[widget.indexOfFood].image),
+                              fit: BoxFit.cover)),
+                    )),
             ),
           ),
           SliverPadding(
