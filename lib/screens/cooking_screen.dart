@@ -71,15 +71,15 @@ class _CookingScreenState extends State<CookingScreen> {
                   ),
                   collapseMode: CollapseMode.parallax,
                   background: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(30),
-                              bottomLeft: Radius.circular(30)),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  recipeList[widget.indexOfFood].image),
-                              fit: BoxFit.cover)),
-                    )),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(30),
+                            bottomLeft: Radius.circular(30)),
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                recipeList[widget.indexOfFood].image),
+                            fit: BoxFit.cover)),
+                  )),
             ),
           ),
           SliverPadding(
@@ -87,6 +87,25 @@ class _CookingScreenState extends State<CookingScreen> {
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: kMainColor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: <Widget>[
+                          Text('unsplash\'s image by:',style: TextStyle(fontWeight: FontWeight.bold,)),
+                          InkWell(child: Text('amirali mirhashemian',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold), )
+                          ,)
+                          
+
+                          
+                        ],
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
@@ -158,6 +177,7 @@ class _CookingScreenState extends State<CookingScreen> {
                         child: Center(
                             child: FutureBuilder<Widget>(
                                 future: getImageUrl(
+                                  
                                     recipeList[widget.indexOfFood]
                                         .ingredients
                                         .keys
@@ -252,6 +272,9 @@ class _CookingScreenState extends State<CookingScreen> {
   }
 
   Future<Widget> getImageUrl(String imageName) async {
+    int num = 0;
+    print("API request maded sir for $num times");
+    num++;
     NetworkHelper networkHelper = NetworkHelper(search: imageName);
     var decodedData = await networkHelper.getJsonData();
 

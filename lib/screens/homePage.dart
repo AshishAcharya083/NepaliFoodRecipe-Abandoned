@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:food/components/searchbar.dart';
 import 'package:food/components/cards.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/services.dart';
+import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,23 +19,9 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-      // DeviceOrientation.landscapeLeft,
-    ]);
+   
   }
 
-  @override
-  dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +32,7 @@ class _HomeScreenState extends State<HomeScreen>
           backgroundColor: Colors.transparent,
           title: Text(
             'Home',
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30),
+            style: kEnglishTextStyle.copyWith(color: Colors.black,fontSize: 30,letterSpacing: 0)
           ),
         ),
         body: Padding(
@@ -56,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: SearchBar(),
               ),
               Expanded(

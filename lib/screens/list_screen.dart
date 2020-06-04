@@ -22,70 +22,12 @@ class _MyHomePageState extends State<MyHomePage> {
   bool closeTopContainer = false;
   double topContainer = 0;
 
-  List<Widget> itemsData = [];
-
-  void getPostsData() {
-    List<dynamic> responseList = FOOD_DATA;
-    List<Widget> listItems = [];
-    responseList.forEach((post) {
-      listItems.add(
-        Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      post["name"],
-                      style: const TextStyle(
-                          fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      post["brand"],
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "\$ ${post["price"]}",
-                      style: const TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Image.asset(
-                  'images/burger.jpg',
-                  height: double.infinity,
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-    setState(() {
-      itemsData = listItems;
-    });
-  }
+ 
 
   @override
   void initState() {
     super.initState();
-    getPostsData();
+    
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -102,23 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
     final double categoryHeight = size.height * 0.30;
     return SafeArea(
       child: Scaffold(
+        
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
-          leading: Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
+          backgroundColor: Colors.transparent,
+         
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search, color: Colors.black),
               onPressed: () {},
             ),
-            IconButton(
-              icon: Icon(Icons.person, color: Colors.black),
-              onPressed: () {},
-            )
+           
           ],
         ),
         body: Container(
@@ -141,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                   child: ListView.builder(
                       controller: controller,
-                      itemCount: itemsData.length,
+                      itemCount: recipeList.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         double scale = 1.0;
@@ -169,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               transform: Matrix4.identity()..scale(scale, scale),
                               alignment: Alignment.bottomCenter,
                               child: Align(
-                                heightFactor: 0.7,
+                                heightFactor: 0.8,
                                 alignment: Alignment.topCenter,
                                 child: Container(
                                   height: 150,
@@ -191,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ]),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 10),
+                                        horizontal: 10.0, vertical: 10),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -199,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Expanded(
+                                          
                                           child: Text(recipeList[index].name,
                                               style: kNepaliTextStyle),
                                           // Text(
@@ -215,10 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                           // )
                                         ),
                                         Expanded(
+                                          
                                             child: Container(
                                           child: ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(15),
                                             child: Image.network(recipeList[index].image,fit: BoxFit.cover,)
                                           ),
                                         ))
