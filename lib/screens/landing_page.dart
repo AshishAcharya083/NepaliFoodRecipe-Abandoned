@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'homePage.dart';
+
 import 'list_screen.dart';
 // import 'cooking_screen.dart';
 
@@ -13,10 +14,10 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
    
   List tabs = [
-    
+ 
     HomeScreen(),
     
-    ListCard(),
+    ListScreen(),
     // CookingScreen(),
     Text('this is n0. 3')
   ];

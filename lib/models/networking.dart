@@ -12,7 +12,7 @@ class NetworkHelper {
   NetworkHelper({this.search});
 
   Future<String> getJsonData() async {
-    try{
+  
     http.Response response = await http.get(
         'https://api.unsplash.com/search/photos?per_page=1&client_id=pnddBzwFT4wI7MvYeIWucAV-i_cQ0GZ141lte8niAdY&query=$search');
 
@@ -25,8 +25,6 @@ class NetworkHelper {
     } else {
       print('There is an error of status code ${response.statusCode}');
       return '${response.statusCode}';
-    }}catch(e){
-      return 'https://image.shutterstock.com/image-photo/red-apple-on-white-background-260nw-158989157.jpg';
     }
   }
 }
