@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:food/models/searching.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

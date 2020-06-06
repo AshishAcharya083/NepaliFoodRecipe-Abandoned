@@ -9,12 +9,12 @@ final List<RecipeStructure> recipeList = [
       description: 'descritption here',
       ingredients: {
         'Bread': 'ब्रेड - 2',
-        'lettuce': 'सलाद - २ देखि ३ पातहरू',
+        'lettuce': 'सलाद - २-३ पातहरू',
         'cheese': 'चीज - १ टुक्रा',
         'tomato': 'टमाटर - १ गोल ​​गोल घेरामा काटियो',
-        'green chilli ': 'हरियो घाउ मिर्च - केही राम्रो गोल घेरामा काटिएको ',
+        'green chilli ': 'हरियो मिर्च - केही राम्रो गोल घेरामा काटिएको ',
         'onion': 'प्याज- केही गोल गोल सर्कलमा काटिएको ',
-        'Mayonnaise': 'मेयोनेज- (वैकल्पिक)',
+        'Mayonnaise': 'मेयोनेज (वैकल्पिक)',
       },
       stepsForCooking: [
         'ब्रेडको  खैरो पक्ष काट्नुहोस्',

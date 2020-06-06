@@ -272,9 +272,9 @@ class _CookingScreenState extends State<CookingScreen> {
   }
 
   Future<Widget> getImageUrl(String imageName) async {
-    int num = 0;
-    print("API request maded sir for $num times");
-    num++;
+    
+    
+    
     NetworkHelper networkHelper = NetworkHelper(search: imageName);
     var decodedData = await networkHelper.getJsonData();
 

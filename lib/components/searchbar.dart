@@ -1,28 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:food/constants.dart';
+import 'package:food/models/searching.dart';
 
 class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      // margin: EdgeInsets.symmetric(horizontal: 10),
-      elevation: 4.0,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0,),
+    return GestureDetector(
+      onTap: (){
+         showSearch(
+                  context: context,
+                  delegate: ArticleSearch(),
+                );
+      },
+          child: Card(
+        // margin: EdgeInsets.symmetric(horizontal: 10),
+        elevation: 4.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-               //code the drawer menu 
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: ArticleSearch(),
+                );
               },
-              child: Icon(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              icon: Icon(
                 Icons.search,
-                color: Colors.black87,
-                size: 30.0,
+                size: 30,
+                color: kMainColor,
               ),
+              color: Colors.black87,
             ),
             Flexible(
               child: TextField(
+                enabled: false,
                 style: TextStyle(
                   fontFamily: 'Jost',
                   fontWeight: FontWeight.w500,
@@ -34,8 +47,8 @@ class SearchBar extends StatelessWidget {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        left: 15, bottom: 11, top: 11, right: 15),
+                    contentPadding:
+                        EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                     hintText: 'Search Foods'),
               ),
             ),
