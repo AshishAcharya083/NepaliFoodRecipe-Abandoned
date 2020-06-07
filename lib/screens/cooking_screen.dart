@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import '../models/networking.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 
 class CookingScreen extends StatefulWidget {
@@ -97,9 +99,12 @@ class _CookingScreenState extends State<CookingScreen> {
                       child: Row(
                         children: <Widget>[
                           Text('unsplash\'s image by:',style: TextStyle(fontWeight: FontWeight.bold,)),
-                          InkWell(child: Text('amirali mirhashemian',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold), )
+                          InkWell(
+                            onTap: () => launch('https://unsplash.com/@shootdelicious') ,
+                            child: Text(' Eiliv-Sonas Aceron  ',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold), )
                           ,)
                           
+
 
                           
                         ],

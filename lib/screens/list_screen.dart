@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/screens/cooking_screen.dart';
+import 'package:flutter_image/network.dart';
 
 class ListScreen extends StatelessWidget {
   @override
@@ -17,6 +18,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
   final CategoriesScroller categoriesScroller = CategoriesScroller();
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
@@ -119,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       boxShadow: [
                                         BoxShadow(
                                          
-                                          color: recipeList[index].type == 'nveg'
+                                          color: recipeList[index].veg == false
                                               ? Colors.red.withOpacity(0.9)
                                               : Colors.green.withOpacity(0.9),
                                           spreadRadius: 0.5,
@@ -158,7 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(15),
-                                            child: Image.network(recipeList[index].image,fit: BoxFit.cover,)
+                                            child: FadeInImage(
+                                              placeholder: AssetImage('images/burger.jpg'),
+                                              image: NetworkImageWithRetry(recipeList[index].image,),fit: BoxFit.cover,)
                                           ),
                                         ))
                                       ],

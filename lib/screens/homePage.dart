@@ -5,8 +5,10 @@ import 'package:food/components/cards.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
+import 'package:food/models/recipe_structure.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:food/models/searching.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,13 +18,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  List<int> vegetable = [];
+  List<int> meat = [];
 
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
-   
+    getFood();
+       
   }
 
+  void getFood() {
+    for (int i = 0; i < recipeList.length; i++) {
+      if (recipeList[i].veg == true) {
+        setState(() {
+          vegetable.add(i);
+        });
+      }
+      if(recipeList[i].mainItem == MainItem.meat){
+        setState(() {
+          meat.add(i);
+        });
+        
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +51,9 @@ class _HomeScreenState extends State<HomeScreen>
           titleSpacing: 12,
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(
-            'Home',
-            style: kEnglishTextStyle.copyWith(color: Colors.black,fontSize: 30,letterSpacing: 0)
-          ),
+          title: Text('Home',
+              style: kEnglishTextStyle.copyWith(
+                  color: Colors.black, fontSize: 30, letterSpacing: 0)),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -48,28 +67,31 @@ class _HomeScreenState extends State<HomeScreen>
               Expanded(
                   flex: 2,
                   child: OrientationBuilder(builder: (context, orientation) {
-                    return CarouselSlider(
-                      options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          aspectRatio: 2,
-                          height: 400),
-                      items: [1, 2, 3].map((i) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            recipeList[i - 1].image),
-                                        fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.amber));
-                          },
-                        );
-                      }).toList(),
+                    return GestureDetector(
+                      onTap: ()=>launch('https://unsplash.com/@amir_v_ali'),
+                                          child: CarouselSlider(
+                        options: CarouselOptions(
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            aspectRatio: 2,
+                            height: 400),
+                        items: [1, 2, 3].map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              recipeList[i - 1].image),
+                                          fit: BoxFit.cover),
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.amber));
+                            },
+                          );
+                        }).toList(),
+                      ),
                     );
                   })),
               Expanded(flex: 3, child: myTabBar()),
@@ -113,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
             child: Container(
           height: 20.0,
           child: new TabBarView(controller: _tabController, children: [
-            ListView.builder(
+            ListView.builder( //OPTION: POPULAR
                 itemCount: 3,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, int index) {
@@ -122,18 +144,46 @@ class _HomeScreenState extends State<HomeScreen>
                     child: CategoryCard(
                         networkImage:
                             'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
-                        category: 'momo'),
+                        foodName: 'momo'),
                   );
                 }),
-            Tab(
-              text: 'Vegetable ',
+            ListView.builder( //OPTION VEGETABLE
+              itemCount: vegetable.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: CategoryCard(
+                      networkImage: recipeList[vegetable[index]].image,
+                      foodName: recipeList[vegetable[index]].name),
+                );
+              },
             ),
-            Tab(
-              text: 'Fruit',
+            ListView.builder( //OPTION FRUIT
+              itemCount: vegetable.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: CategoryCard(
+                      networkImage: recipeList[vegetable[index]].image,
+                      foodName: recipeList[vegetable[index]].name),
+                );
+              },
             ),
-            Tab(
-              text: 'Mrat',
-            )
+             ListView.builder( //OPTION MEAT
+              itemCount: meat.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: CategoryCard(
+                      networkImage: recipeList[meat[index]].image,
+                      foodName: recipeList[meat[index]].name),
+                );
+              },
+            ),
+            
           ]),
         ))
       ],

@@ -1,12 +1,15 @@
+
 import 'package:flutter/material.dart';
 
 class ArticleSearch extends SearchDelegate {
+  
+  
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
 
       IconButton(icon:Icon(Icons.clear) , onPressed: (){
-        query = '';
+        query = ''; 
        
       })
       ,
@@ -24,7 +27,9 @@ class ArticleSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(child: Text('this is results'),),
+    );
   }
 
   @override

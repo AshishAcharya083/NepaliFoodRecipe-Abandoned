@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:food/constants.dart';
 
 class CategoryCard extends StatelessWidget {
   final String networkImage;
-  final String category;
+  final String foodName;
   final String numberOfRecipe;
 
   CategoryCard({
     @required this.networkImage,
-    @required this.category,
+    @required this.foodName,
     this.numberOfRecipe,
   });
 
@@ -21,9 +22,8 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: 
-Container(
-
+              flex: 5,
+              child: Container(
                 constraints: BoxConstraints(
                   minHeight: 20,
                   minWidth: 180,
@@ -32,31 +32,26 @@ Container(
                 // height: 120,
                 // width: 150,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
                   image: DecorationImage(
-                    fit: BoxFit.cover,
+                      fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
                         networkImage,
-                      
                       )),
                 ),
+              ),
+            ),
+            Expanded(
+              
+              child: Center(
                 
+                child: Text(foodName,
+                textAlign: TextAlign.center,
+                    style: kNepaliTextStyle.copyWith(fontSize: 15)),
               ),
             ),
-            Text(
-              category,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            // Text(
-            //   '$numberOfRecipe नुस्खा ',
-            //   style: TextStyle(color: Colors.grey,fontSize: 10),
-            // ),
+           
           ],
         ));
   }
 }
-
