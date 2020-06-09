@@ -7,7 +7,6 @@ import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/models/recipe_structure.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:food/models/searching.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {

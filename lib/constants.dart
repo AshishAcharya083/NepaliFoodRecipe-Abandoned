@@ -17,7 +17,9 @@ final kEnglishTextStyle = GoogleFonts.getFont('Hind',
 textStyle: TextStyle(
   letterSpacing: 1.2,
   fontWeight: FontWeight.bold,
-  fontSize: 20
+  fontSize: 20,
+  color: Colors.black
+
 
 ));
 

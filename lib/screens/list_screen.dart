@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         
         backgroundColor: Colors.white,
         appBar: AppBar(
+          title: Text('Food List',style: kEnglishTextStyle.copyWith(fontSize: 30,letterSpacing: 0),),
           elevation: 0,
           backgroundColor: Colors.transparent,
          
@@ -65,9 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
           height: size.height,
           child: Column(
             children: <Widget>[
-              const SizedBox(
-                height: 10,
-              ),
+              // const SizedBox( //responsible for height between appBar and CategoryScroller
+              //   height: 0,
+              // ),
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 500),
                 opacity: closeTopContainer ? 0 : 1,
