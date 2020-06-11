@@ -24,3 +24,4 @@ textStyle: TextStyle(
 ));
 
 const kMainColor = Color(0xFFFFC529);
+

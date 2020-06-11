@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_image/network.dart';
 import 'package:food/components/searchbar.dart';
 import 'package:food/components/cards.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -7,7 +8,6 @@ import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/models/recipe_structure.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,28 +17,33 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  List<int> indexList = [];
   List<int> vegetable = [];
   List<int> meat = [];
 
   void initState() {
+    
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
     getFood();
-       
+    print(indexList);
   }
 
   void getFood() {
     for (int i = 0; i < recipeList.length; i++) {
+      setState(() {
+        indexList.add(i);
+      });
+      
       if (recipeList[i].veg == true) {
         setState(() {
           vegetable.add(i);
         });
       }
-      if(recipeList[i].mainItem == MainItem.meat){
+      if (recipeList[i].mainItem == MainItem.meat) {
         setState(() {
           meat.add(i);
         });
-        
       }
     }
   }
@@ -46,57 +51,65 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          titleSpacing: 12,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: Text('Home',
-              style: kEnglishTextStyle.copyWith(
-                  color: Colors.black, fontSize: 30, letterSpacing: 0)),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: AppBar(
+        titleSpacing: 12,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text('Home',
+            style: kEnglishTextStyle.copyWith(
+                color: Colors.black, fontSize: 30, letterSpacing: 0)),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+              child: ListView(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
                 child: SearchBar(),
               ),
-              Expanded(
-                  flex: 2,
-                  child: OrientationBuilder(builder: (context, orientation) {
-                    return GestureDetector(
-                      onTap: ()=>launch('https://unsplash.com/@amir_v_ali'),
-                                          child: CarouselSlider(
-                        options: CarouselOptions(
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                            aspectRatio: 2,
-                            height: 400),
-                        items: [1, 2, 3].map((i) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              return Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              recipeList[i - 1].image),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.amber));
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  })),
-              Expanded(flex: 3, child: myTabBar()),
+              myCarouselSlider(),
+              SizedBox(width: 400, height: 300, child: myTabBar())
             ],
-          ),
-        ));
+          ))
+        ],
+      ),
+    );
+  }
+
+  CarouselSlider myCarouselSlider() {
+    return CarouselSlider(
+      options: CarouselOptions(
+          enlargeCenterPage: true, autoPlay: true, aspectRatio: 2, height: 200),
+      items: indexList.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                              child: FadeInImage(
+                  placeholder: AssetImage('images/burger.jpg'),
+                  image: NetworkImageWithRetry(
+                    recipeList[i].image,
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              // decoration: BoxDecoration(
+              //     image: DecorationImage(
+              //         image: NetworkImage(recipeList[i - 1].image),
+              //         fit: BoxFit.cover),
+              //     borderRadius: BorderRadius.circular(10),
+              //     color: Colors.amber),
+            );
+          },
+        );
+      }).toList(),
+    );
   }
 
   Column myTabBar() {
@@ -134,7 +147,8 @@ class _HomeScreenState extends State<HomeScreen>
             child: Container(
           height: 20.0,
           child: new TabBarView(controller: _tabController, children: [
-            ListView.builder( //OPTION: POPULAR
+            ListView.builder(
+                //OPTION: POPULAR
                 itemCount: 3,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, int index) {
@@ -146,7 +160,8 @@ class _HomeScreenState extends State<HomeScreen>
                         foodName: 'momo'),
                   );
                 }),
-            ListView.builder( //OPTION VEGETABLE
+            ListView.builder(
+              //OPTION VEGETABLE
               itemCount: vegetable.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
@@ -158,7 +173,8 @@ class _HomeScreenState extends State<HomeScreen>
                 );
               },
             ),
-            ListView.builder( //OPTION FRUIT
+            ListView.builder(
+              //OPTION FRUIT
               itemCount: vegetable.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
@@ -170,7 +186,8 @@ class _HomeScreenState extends State<HomeScreen>
                 );
               },
             ),
-             ListView.builder( //OPTION MEAT
+            ListView.builder(
+              //OPTION MEAT
               itemCount: meat.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
@@ -182,7 +199,6 @@ class _HomeScreenState extends State<HomeScreen>
                 );
               },
             ),
-            
           ]),
         ))
       ],

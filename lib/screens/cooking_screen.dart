@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
+import 'package:transparent_image/transparent_image.dart';
 import '../models/networking.dart';
-import 'package:url_launcher/url_launcher.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 
 class CookingScreen extends StatefulWidget {
@@ -89,28 +89,6 @@ class _CookingScreenState extends State<CookingScreen> {
               delegate: SliverChildListDelegate(
                 [
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: kMainColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(
-                        children: <Widget>[
-                          Text('unsplash\'s image by:',style: TextStyle(fontWeight: FontWeight.bold,)),
-                          InkWell(
-                            onTap: () => launch('https://unsplash.com/@shootdelicious') ,
-                            child: Text(' Eiliv-Sonas Aceron  ',style: TextStyle(color: Colors.green,fontWeight: FontWeight.bold), )
-                          ,)
-                          
-
-
-                          
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Text(
                       recipeList[widget.indexOfFood].ename,
@@ -168,10 +146,11 @@ class _CookingScreenState extends State<CookingScreen> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 crossAxisCount: 2,
-                childAspectRatio: 2),
+                childAspectRatio: 1.7),
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
               return SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
                 child: Column(
                   children: <Widget>[
                     Card(
@@ -181,7 +160,6 @@ class _CookingScreenState extends State<CookingScreen> {
                         child: Center(
                             child: FutureBuilder<Widget>(
                                 future: getImageUrl(
-                                  
                                     recipeList[widget.indexOfFood]
                                         .ingredients
                                         .keys
@@ -276,15 +254,36 @@ class _CookingScreenState extends State<CookingScreen> {
   }
 
   Future<Widget> getImageUrl(String imageName) async {
-    
-    
-    
     NetworkHelper networkHelper = NetworkHelper(search: imageName);
     var decodedData = await networkHelper.getJsonData();
 
     return CircleAvatar(
-      radius: 25,
-      backgroundImage: CachedNetworkImageProvider(decodedData),
+      radius: 30,
+      backgroundColor: Colors.transparent,
+      child: ClipRRect(
+      
+        borderRadius: BorderRadius.circular(50),
+      child:  FadeInImage.memoryNetwork(
+        fadeInCurve: Curves.bounceInOut,
+            height: 80,
+            width: 80,
+            
+            fit: BoxFit.cover,
+            placeholder: kTransparentImage,
+            image: decodedData),
+      )
     );
   }
 }
+
+
+// CircleAvatar(
+//       radius: 25,
+//       child: ClipOval(
+//         child: FadeInImage.memoryNetwork(
+//             height: 80,
+//             fit: BoxFit.cover,
+//             placeholder: kTransparentImage,
+//             image: decodedData),
+//       ),
+//     );

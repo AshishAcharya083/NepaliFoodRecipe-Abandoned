@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 import 'package:food/constants.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -29,15 +30,18 @@ class CategoryCard extends StatelessWidget {
                   minWidth: 180,
                 ),
                 width: 150,
-                // height: 120,
-                // width: 150,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(topLeft:Radius.circular(15),topRight: Radius.circular(15)),
+                  child: FadeInImage(
+                    
+                    fadeInCurve: Curves.fastLinearToSlowEaseIn,
+                    fadeInDuration: Duration(milliseconds: 200),
+                    fit: BoxFit.cover,
+                    placeholder: AssetImage('images/burger.jpg'), image: NetworkImageWithRetry(networkImage)),
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                        networkImage,
-                      )),
+                  
                 ),
               ),
             ),

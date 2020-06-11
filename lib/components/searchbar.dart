@@ -6,14 +6,13 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-         showSearch(
-                  context: context,
-                  delegate: ArticleSearch(),
-                );
+      onTap: () {
+        showSearch(
+          context: context,
+          delegate: ArticleSearch(),
+        );
       },
-          child: Card(
-        // margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Card(
         elevation: 4.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,24 +46,12 @@ class SearchBar extends StatelessWidget {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                    contentPadding: EdgeInsets.only(
+                        left: 15, bottom: 11, top: 11, right: 15),
                     hintText: 'Search Foods'),
               ),
             ),
-            // GestureDetector(
-            //   child: CircleAvatar(
-            //     radius: 18.0,
-            //     backgroundImage: AssetImage('assets/images/profile.jpg'),
-            //   ),
-            //   onTap: () {
-            //     // showDialog(
-            //     //     context: context,
-            //     //     builder: (BuildContext context) {
-            //     //       return AccountInfo();
-            //     //     });
-            //   },
-            // ),
+        
           ],
         ),
       ),

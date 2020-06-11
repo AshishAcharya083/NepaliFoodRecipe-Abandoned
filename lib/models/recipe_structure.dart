@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-enum MainItem{ fruit , vegetable , meat}
+
+enum MainItem { fruit, vegetable, meat }
+
 class RecipeStructure {
   Map<String, String> ingredients;
   List<String> stepsForCooking;
@@ -10,9 +12,6 @@ class RecipeStructure {
   String image;
   MainItem mainItem;
 
-  
-  
-
   RecipeStructure(
       {@required this.name,
       this.ename,
@@ -21,7 +20,5 @@ class RecipeStructure {
       this.description,
       this.ingredients,
       this.stepsForCooking,
-      
       this.image});
-    
 }
