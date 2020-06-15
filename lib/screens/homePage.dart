@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
     getFood();
-    print(indexList);
+    
   }
 
   void getFood() {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food/models/recipe_list.dart';
-import 'package:food/models/recipe_structure.dart';
 import 'package:food/screens/cooking_screen.dart';
 
 class ArticleSearch extends SearchDelegate {

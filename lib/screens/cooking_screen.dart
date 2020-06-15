@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
-import 'package:transparent_image/transparent_image.dart';
+// import 'package:transparent_image/transparent_image.dart';
 import '../models/networking.dart';
 // import 'package:firebase_storage/firebase_storage.dart';
 
@@ -24,18 +25,7 @@ class _CookingScreenState extends State<CookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20, right: 20),
-        child: FloatingActionButton(
-          onPressed: () {},
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: Icon(
-            Icons.timer,
-            size: 30,
-          ),
-        ),
-      ),
+     
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
@@ -46,7 +36,7 @@ class _CookingScreenState extends State<CookingScreen> {
           SliverAppBar(
             backgroundColor: Colors.white,
             elevation: 0,
-            expandedHeight: 200.0,
+            expandedHeight: 300.0,
             floating: false,
             pinned: true,
             flexibleSpace: Padding(
@@ -77,9 +67,12 @@ class _CookingScreenState extends State<CookingScreen> {
                             bottomRight: Radius.circular(30),
                             bottomLeft: Radius.circular(30)),
                         image: DecorationImage(
-                            image: NetworkImage(
-                                recipeList[widget.indexOfFood].image),
-                            fit: BoxFit.cover)),
+                            image: NetworkImageWithRetry(recipeList[widget.indexOfFood].image) ,
+                            
+                            // NetworkImage(
+                            //     recipeList[widget.indexOfFood].image),
+                            fit: BoxFit.cover),
+                            ),
                   )),
             ),
           ),
@@ -258,32 +251,17 @@ class _CookingScreenState extends State<CookingScreen> {
     var decodedData = await networkHelper.getJsonData();
 
     return CircleAvatar(
-      radius: 30,
-      backgroundColor: Colors.transparent,
-      child: ClipRRect(
-      
-        borderRadius: BorderRadius.circular(50),
-      child:  FadeInImage.memoryNetwork(
-        fadeInCurve: Curves.bounceInOut,
+        radius: 30,
+        backgroundColor: Colors.transparent,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: CachedNetworkImage(
+            imageUrl: decodedData,
+            fadeInCurve: Curves.bounceInOut,
             height: 80,
             width: 80,
-            
             fit: BoxFit.cover,
-            placeholder: kTransparentImage,
-            image: decodedData),
-      )
-    );
+          ),
+        ));
   }
 }
-
-
-// CircleAvatar(
-//       radius: 25,
-//       child: ClipOval(
-//         child: FadeInImage.memoryNetwork(
-//             height: 80,
-//             fit: BoxFit.cover,
-//             placeholder: kTransparentImage,
-//             image: decodedData),
-//       ),
-//     );

@@ -18,19 +18,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   final CategoriesScroller categoriesScroller = CategoriesScroller();
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
 
- 
-
   @override
   void initState() {
     super.initState();
-    
+
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -43,23 +39,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // print('build method called');
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return SafeArea(
       child: Scaffold(
-        
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Food List',style: kEnglishTextStyle.copyWith(fontSize: 30,letterSpacing: 0),),
+          title: Text(
+            'Food List',
+            style: kEnglishTextStyle.copyWith(fontSize: 30, letterSpacing: 0),
+          ),
           elevation: 0,
           backgroundColor: Colors.transparent,
-         
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search, color: Colors.black),
               onPressed: () {},
             ),
-           
           ],
         ),
         body: Container(
@@ -88,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         double scale = 1.0;
                         if (topContainer > 0.5) {
                           scale = index + 0.5 - topContainer;
+
                           if (scale < 0) {
                             scale = 0;
                           } else if (scale > 1) {
@@ -95,19 +93,23 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
                         }
 
-                        if (index < 0 ||
-                            index > 10 ||
-                            index > recipeList.length - 1) {
+                        if (index < 0 || index > recipeList.length - 1) {
                           return null;
                         }
-                        return GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CookingScreen(indexOfFood: index,)));
-                        },
-                                                  child: Opacity(
-                            opacity: scale,
+                        return Opacity(
+                          opacity: scale,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CookingScreen(
+                                            indexOfFood: index,
+                                          )));
+                            },
                             child: Transform(
-                              transform: Matrix4.identity()..scale(scale, scale),
+                              transform: Matrix4.identity()
+                                ..scale(scale, scale),
                               alignment: Alignment.bottomCenter,
                               child: Align(
                                 heightFactor: 0.8,
@@ -117,14 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
                                   decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20.0)),
                                       color: Colors.white,
                                       boxShadow: [
                                         BoxShadow(
-                                         
                                           color: recipeList[index].veg == false
-                                              ? Colors.red.withOpacity(0.9)
+                                              ? Colors.red.withOpacity(1)
                                               : Colors.green.withOpacity(0.9),
                                           spreadRadius: 0.5,
                                           blurRadius: 7,
@@ -140,8 +141,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Expanded(
-                                          
                                           child: Text(recipeList[index].name,
+                                              textAlign: TextAlign.center,
                                               style: kNepaliTextStyle),
                                           // Text(
                                           //   post["brand"],
@@ -157,15 +158,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                           // )
                                         ),
                                         Expanded(
-                                          
                                             child: Container(
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            child: FadeInImage(
-                                              placeholder: AssetImage('images/burger.jpg'),
-                                              image: NetworkImageWithRetry(recipeList[index].image,),fit: BoxFit.cover,)
-                                          ),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: FadeInImage(
+                                                placeholder: AssetImage(
+                                                    'images/loading.gif'),
+                                                image: NetworkImageWithRetry(
+                                                  recipeList[index].image,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              )),
                                         ))
                                       ],
                                     ),
@@ -300,5 +304,3 @@ class CategoriesScroller extends StatelessWidget {
     );
   }
 }
-
-
