@@ -96,7 +96,7 @@ class _CookingScreenState extends State<CookingScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(
-                      'लोकप्रिय विश्वासको विपरीत, लोरेम इप्सम केवल अनियमित पाठ मात्र होइन। यसको पुरानो शास्त्रीय ल्याटिन साहित्यको एउटा टुक्रामा BC 45 ईसापूर्व। From देखि शुरू भएको छ, जुन २००० वर्ष भन्दा पुरानो भयो। भर्जिनियाको ह्याम्पडेन-सिड्नी कलेजका ल्याटिन प्रोफेसर रिचर्ड म्याक्लिन्टोकले लोरेम इप्सम खण्डबाट ल्याटिन शब्दहरू अस्पष्ट पार्न खोज्नुभयो र शास्त्रीय साहित्यमा उक्त शब्दको उद्धरण गर्दै निस्सन्देह स्रोत पत्ता लगाए।',
+                     recipeList[widget.indexOfFood].description,
                       textAlign: TextAlign.start,
                       style: kNepaliTextStyle.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.grey),

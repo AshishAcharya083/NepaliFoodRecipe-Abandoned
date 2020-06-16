@@ -82,6 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemCount: recipeList.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
+                                            print('value of top container $topContainer');
+
                         double scale = 1.0;
                         if (topContainer > 0.5) {
                           scale = index + 0.5 - topContainer;
@@ -112,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ..scale(scale, scale),
                               alignment: Alignment.bottomCenter,
                               child: Align(
-                                heightFactor: 0.8,
+                                heightFactor: 0.7,
                                 alignment: Alignment.topCenter,
                                 child: Container(
                                   height: 150,
