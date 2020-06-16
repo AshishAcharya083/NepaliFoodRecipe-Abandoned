@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print('build method called');
+    
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return SafeArea(
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemCount: recipeList.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                                            print('value of top container $topContainer');
+                        
 
                         double scale = 1.0;
                         if (topContainer > 0.5) {
@@ -136,45 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10.0, vertical: 10),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Text(recipeList[index].name,
-                                              textAlign: TextAlign.center,
-                                              style: kNepaliTextStyle),
-                                          // Text(
-                                          //   post["brand"],
-                                          //   style: const TextStyle(fontSize: 17, color: Colors.grey),
-                                          // ),
-
-                                          // Text(
-                                          //   "\$ ${post["price"]}",
-                                          //   style: const TextStyle(
-                                          //       fontSize: 25,
-                                          //       color: Colors.black,
-                                          //       fontWeight: FontWeight.bold),
-                                          // )
-                                        ),
-                                        Expanded(
-                                            child: Container(
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              child: FadeInImage(
-                                                placeholder: AssetImage(
-                                                    'images/loading.gif'),
-                                                image: NetworkImageWithRetry(
-                                                  recipeList[index].image,
-                                                ),
-                                                fit: BoxFit.cover,
-                                              )),
-                                        ))
-                                      ],
-                                    ),
+                                    child: foodItem(index),
                                   ),
                                 ),
                               ),
@@ -186,6 +148,32 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Row foodItem(int index) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: Text(recipeList[index].name,
+              textAlign: TextAlign.center, style: kNepaliTextStyle),
+        ),
+        Expanded(
+            child: Container(
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: FadeInImage(
+                placeholder: AssetImage('images/loading.gif'),
+                image: NetworkImageWithRetry(
+                  recipeList[index].image ??
+                      'https://firebasestorage.googleapis.com/v0/b/food-recipes-in-nepali.appspot.com/o/404.jpg?alt=media&token=66b1ec68-1687-45e8-9f57-c5a8101c7016',
+                ),
+                fit: BoxFit.cover,
+              )),
+        ))
+      ],
     );
   }
 }

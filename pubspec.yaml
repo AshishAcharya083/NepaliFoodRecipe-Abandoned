@@ -34,7 +34,7 @@ dependencies:
   firebase_analytics: ^5.0.14
   cloud_firestore: ^0.13.6
   flutter_image: ^3.0.0
-  transparent_image: ^1.0.0
+  font_awesome_flutter: ^8.8.1
 
  
 

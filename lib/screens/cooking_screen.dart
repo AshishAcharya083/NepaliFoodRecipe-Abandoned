@@ -96,7 +96,7 @@ class _CookingScreenState extends State<CookingScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(
-                     recipeList[widget.indexOfFood].description,
+                     recipeList[widget.indexOfFood].description ?? ' ',
                       textAlign: TextAlign.start,
                       style: kNepaliTextStyle.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.grey),

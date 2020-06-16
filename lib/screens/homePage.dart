@@ -7,7 +7,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food/constants.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/models/recipe_structure.dart';
+import 'package:food/screens/cooking_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -17,24 +19,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-  List<int> indexList = [];
+  
   List<int> vegetable = [];
   List<int> meat = [];
+  List<int> popular = [];
 
   void initState() {
-    
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
     getFood();
-    
   }
 
   void getFood() {
     for (int i = 0; i < recipeList.length; i++) {
-      setState(() {
-        indexList.add(i);
-      });
+      if (recipeList[i].popular == true) {
+        setState(() {
+          popular.add(i);
+        });
+      }
+
       
+
       if (recipeList[i].veg == true) {
         setState(() {
           vegetable.add(i);
@@ -71,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen>
                 child: SearchBar(),
               ),
               myCarouselSlider(),
-              SizedBox(width: 400, height: 300, child: myTabBar())
+              SizedBox(width: 400, height: 300, child: myTabBar()),
             ],
           ))
         ],
@@ -83,28 +88,23 @@ class _HomeScreenState extends State<HomeScreen>
     return CarouselSlider(
       options: CarouselOptions(
           enlargeCenterPage: true, autoPlay: true, aspectRatio: 2, height: 200),
-      items: indexList.map((i) {
+      items: popular.map((i) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                              child: FadeInImage(
+                child: FadeInImage(
                   placeholder: AssetImage('images/burger.jpg'),
                   image: NetworkImageWithRetry(
-                    recipeList[i].image,
+                    recipeList[i].image ?? errorImage,
                   ),
                   fit: BoxFit.cover,
                 ),
               ),
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
-              // decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //         image: NetworkImage(recipeList[i - 1].image),
-              //         fit: BoxFit.cover),
-              //     borderRadius: BorderRadius.circular(10),
-              //     color: Colors.amber),
+             
             );
           },
         );
@@ -149,15 +149,21 @@ class _HomeScreenState extends State<HomeScreen>
           child: new TabBarView(controller: _tabController, children: [
             ListView.builder(
                 //OPTION: POPULAR
-                itemCount: 3,
+                itemCount: popular.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, int index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: CategoryCard(
-                        networkImage:
-                            'https://freetibet.org/files/styles/media_box/public/Momos.jpg?itok=ll8VC1NS',
-                        foodName: 'momo'),
+                    child: GestureDetector(
+                      onTap: (){
+                        
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => CookingScreen(indexOfFood:popular[index] ,)));
+                      },
+                                          child: CategoryCard(
+                          networkImage:
+                              recipeList[popular[index]].image ?? errorImage,
+                          foodName: recipeList[popular[index]].name),
+                    ),
                   );
                 }),
             ListView.builder(
@@ -168,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen>
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: CategoryCard(
-                      networkImage: recipeList[vegetable[index]].image,
+                      networkImage: recipeList[vegetable[index]].image ?? errorImage,
                       foodName: recipeList[vegetable[index]].name),
                 );
               },
@@ -181,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen>
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: CategoryCard(
-                      networkImage: recipeList[vegetable[index]].image,
+                      networkImage: recipeList[vegetable[index]].image ?? errorImage,
                       foodName: recipeList[vegetable[index]].name),
                 );
               },
@@ -194,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen>
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: CategoryCard(
-                      networkImage: recipeList[meat[index]].image,
+                      networkImage: recipeList[meat[index]].image ?? errorImage,
                       foodName: recipeList[meat[index]].name),
                 );
               },

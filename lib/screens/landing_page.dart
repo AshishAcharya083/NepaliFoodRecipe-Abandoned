@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:food/screens/feature_screen.dart';
 import 'homePage.dart';
 import 'package:flutter/services.dart';
 
@@ -41,7 +42,7 @@ class _LandingPageState extends State<LandingPage> {
     
     ListScreen(),
     
-    Text('this is n0. 3')
+    FeatureScreen(),
   ];
 
   int _currentIndex = 0;
