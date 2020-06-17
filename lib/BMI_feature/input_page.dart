@@ -29,9 +29,14 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          
           title: Text('BMI CALCULATOR',style: kEnglishTextStyle.copyWith(fontSize: 30,letterSpacing: 0),),
           elevation: 0,
           backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(
+            color: Colors.orangeAccent,
+            size: 30,
+          ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

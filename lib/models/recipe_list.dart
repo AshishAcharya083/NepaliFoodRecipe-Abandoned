@@ -581,7 +581,7 @@ final List<RecipeStructure> recipeList = [
       ]),
  
   RecipeStructure(
-      name: 'Gund Pak',
+      name: 'गुदपाक',
       ename: 'Gudpak',
       veg: true,
       description:
@@ -594,7 +594,7 @@ final List<RecipeStructure> recipeList = [
         'flour': ' गहुको पिठो १ पाउण्ड ',
         'sugar': 'चिनी १ पाउण्ड ',
         'milk': 'तताइयेको दुध २०० ml ',
-        'दुध पाउडर': '२२० ग्राम',
+        'white food powder': 'दुध पाउडर २२० ग्राम',
         'almond': 'काटिएको बादाम २०० ग्राम',
         'cardamom': 'इलायची-१ चम्चा',
         'nuts': 'जाइफल १/२ चम्चा',
@@ -695,6 +695,7 @@ final List<RecipeStructure> recipeList = [
       ename: 'Gulab Jamun',
       popular: true,
       veg: true,
+      image: 'https://firebasestorage.googleapis.com/v0/b/food-recipes-in-nepali.appspot.com/o/Gulab%20Jamun.jpg?alt=media&token=4513be2f-ed85-4da7-97e7-95f7cbc85913',
 
       description:
           'कुनै अवसर वा विशेष दिन र स्वस्थ मिठाईको लागि समेत रसबरी र गुलाब जामुन धेरै नेपालीको रोजाईमा पर्ने गर्छ ।बाहिरबाट किनेका मिठाईहरु बासी र अस्वस्थ हुने सम्भावना बढी हुने हुनाले यी मिठाई आफैले घरमा पनि बनाउन सकिन्छ ।',

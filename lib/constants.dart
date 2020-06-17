@@ -9,6 +9,7 @@ final List<BoxShadow> kboxShadow = [
 final kNepaliTextStyle = GoogleFonts.getFont('Hind',
     textStyle: TextStyle(fontSize: 20,
     fontWeight: FontWeight.bold,
+    color: Colors.black,
      letterSpacing: 1.5, wordSpacing: 1.5));
 
 

@@ -5,8 +5,6 @@ import 'homePage.dart';
 import 'package:flutter/services.dart';
 
 import 'list_screen.dart';
-// import 'cooking_screen.dart';
-
 
 class LandingPage extends StatefulWidget {
   @override
@@ -14,10 +12,9 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  
   void initState() {
     super.initState();
-   
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
@@ -35,13 +32,10 @@ class _LandingPageState extends State<LandingPage> {
     ]);
     super.dispose();
   }
-   
+
   List tabs = [
- 
     HomeScreen(),
-    
     ListScreen(),
-    
     FeatureScreen(),
   ];
 
@@ -64,7 +58,7 @@ class _LandingPageState extends State<LandingPage> {
               size: 30,
             ),
             Icon(
-              Icons.person,
+              Icons.favorite,
               size: 30,
             ),
           ],
