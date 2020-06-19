@@ -35,6 +35,9 @@ dependencies:
   cloud_firestore: ^0.13.6
   flutter_image: ^3.0.0
   font_awesome_flutter: ^8.8.1
+  splashscreen: ^1.2.0
+  
+
 
  
 
