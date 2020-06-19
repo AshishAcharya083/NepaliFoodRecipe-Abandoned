@@ -28,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     controller.addListener(() {
-      double value = controller.offset / 119;
+      double value = controller.offset / 170; //(150 + 20)*1 => (totalH + verticalMargin)* height factor
 
       setState(() {
         topContainer = value;
@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ..scale(scale, scale),
                               alignment: Alignment.bottomCenter,
                               child: Align(
-                                heightFactor: 0.7,
+                                heightFactor: 1,
                                 alignment: Alignment.topCenter,
                                 child: Container(
                                   height: 150,
@@ -127,8 +127,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       boxShadow: [
                                         BoxShadow(
                                           color: recipeList[index].veg == false
-                                              ? Colors.red.withOpacity(1)
-                                              : Colors.green.withOpacity(0.9),
+                                              ? Colors.red
+                                              : Colors.green,
                                           spreadRadius: 0.5,
                                           blurRadius: 7,
                                         )

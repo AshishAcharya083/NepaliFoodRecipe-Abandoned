@@ -145,41 +145,41 @@ class _CookingScreenState extends State<CookingScreen> {
               return SingleChildScrollView(
                 physics: NeverScrollableScrollPhysics(),
                 child: Column(
-                  children: <Widget>[
-                    Card(
-                        elevation: 7,
-                        shape:
-                            CircleBorder(side: BorderSide(color: kMainColor)),
-                        child: Center(
-                            child: FutureBuilder<Widget>(
-                                future: getImageUrl(
-                                    recipeList[widget.indexOfFood]
-                                        .ingredients
-                                        .keys
-                                        .elementAt(index)),
-                                builder: (context, futureSnapshot) {
-                                  if (!futureSnapshot.hasData) {
-                                    return CupertinoActivityIndicator();
-                                  }
-                                  return futureSnapshot.data;
-                                }))),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FittedBox(
-                        alignment: Alignment.center,
-                        child: Container(
-                            child: Text(
-                          recipeList[widget.indexOfFood]
-                              .ingredients
-                              .values
-                              .elementAt(index),
-                          style: kNepaliTextStyle.copyWith(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        )),
-                      ),
-                    )
-                  ],
-                ),
+                    children: <Widget>[
+                      Card(
+                          elevation: 7,
+                          shape:
+                              CircleBorder(side: BorderSide(color: kMainColor)),
+                          child: Center(
+                              child: FutureBuilder<Widget>(
+                future: getImageUrl(
+                    recipeList[widget.indexOfFood]
+                        .ingredients
+                        .keys
+                        .elementAt(index)),
+                builder: (context, futureSnapshot) {
+                  if (!futureSnapshot.hasData) {
+                    return CupertinoActivityIndicator();
+                  }
+                  return futureSnapshot.data;
+                }))),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FittedBox(
+                          alignment: Alignment.center,
+                          child: Container(
+                              child: Text(
+                            recipeList[widget.indexOfFood]
+                                .ingredients
+                                .values
+                                .elementAt(index),
+                            style: kNepaliTextStyle.copyWith(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                      )
+                    ],
+                  ),
               );
             },
                 childCount:
