@@ -10,7 +10,6 @@ import 'package:food/models/recipe_structure.dart';
 import 'package:food/screens/cooking_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -19,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-  
+
   List<int> vegetable = [];
   List<int> meat = [];
   List<int> popular = [];
@@ -37,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen>
           popular.add(i);
         });
       }
-
-      
 
       if (recipeList[i].veg == true) {
         setState(() {
@@ -66,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        
         children: <Widget>[
           Expanded(
               child: ListView(
@@ -76,7 +74,10 @@ class _HomeScreenState extends State<HomeScreen>
                 child: SearchBar(),
               ),
               myCarouselSlider(),
-              SizedBox(width: 400, height: 300, child: myTabBar()),
+              SizedBox(height: 20,),
+              SizedBox(
+                
+                width: 400, height: 300, child: myTabBar()),
             ],
           ))
         ],
@@ -104,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen>
               ),
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
-             
             );
           },
         );
@@ -155,11 +155,15 @@ class _HomeScreenState extends State<HomeScreen>
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: GestureDetector(
-                      onTap: (){
-                        
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CookingScreen(indexOfFood:popular[index] ,)));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CookingScreen(
+                                      indexOfFood: popular[index],
+                                    )));
                       },
-                                          child: CategoryCard(
+                      child: CategoryCard(
                           networkImage:
                               recipeList[popular[index]].image ?? errorImage,
                           foodName: recipeList[popular[index]].name),
@@ -174,7 +178,8 @@ class _HomeScreenState extends State<HomeScreen>
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: CategoryCard(
-                      networkImage: recipeList[vegetable[index]].image ?? errorImage,
+                      networkImage:
+                          recipeList[vegetable[index]].image ?? errorImage,
                       foodName: recipeList[vegetable[index]].name),
                 );
               },
@@ -187,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen>
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: CategoryCard(
-                      networkImage: recipeList[vegetable[index]].image ?? errorImage,
+                      networkImage:
+                          recipeList[vegetable[index]].image ?? errorImage,
                       foodName: recipeList[vegetable[index]].name),
                 );
               },

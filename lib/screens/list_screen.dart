@@ -28,7 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     controller.addListener(() {
-      double value = controller.offset / 170; //(150 + 20)*1 => (totalH + verticalMargin)* height factor
+      double value = controller.offset /
+          170; //(150 + 20)*1 => (totalH + verticalMargin)* height factor
 
       setState(() {
         topContainer = value;
@@ -39,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return SafeArea(
@@ -82,8 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemCount: recipeList.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
-                        
-
                         double scale = 1.0;
                         if (topContainer > 0.5) {
                           scale = index + 0.5 - topContainer;
@@ -157,22 +155,37 @@ class _MyHomePageState extends State<MyHomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          child: Text(recipeList[index].name,
-              textAlign: TextAlign.center, style: kNepaliTextStyle),
+          flex: 3,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Text(recipeList[index].name,
+                  textAlign: TextAlign.center, style: kNepaliTextStyle),
+              IconButton(
+                  icon: Icon(
+                    Icons.favorite,
+                    color: recipeList[index].veg == true
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                  onPressed: () {
+                    print('icon button tapped');
+                  })
+            ],
+          ),
         ),
         Expanded(
+            flex: 4,
             child: Container(
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: FadeInImage(
-                placeholder: AssetImage('images/loading.gif'),
-                image: NetworkImageWithRetry(
-                  recipeList[index].image ??
-                      'https://firebasestorage.googleapis.com/v0/b/food-recipes-in-nepali.appspot.com/o/404.jpg?alt=media&token=66b1ec68-1687-45e8-9f57-c5a8101c7016',
-                ),
-                fit: BoxFit.cover,
-              )),
-        ))
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: FadeInImage(
+                    placeholder: AssetImage('images/loading.gif'),
+                    image: NetworkImageWithRetry(recipeList[index].image),
+                    fit: BoxFit.cover,
+                  )),
+            )),
       ],
     );
   }
