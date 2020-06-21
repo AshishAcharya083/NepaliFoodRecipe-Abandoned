@@ -7,7 +7,7 @@ void main() => runApp(MaterialApp(
         accentColor: Color(0xFFFFC529),
         scaffoldBackgroundColor: Color(0xFFF5F5F5)),
     home: SplashScreen(
-        seconds: 4,
+        seconds: 0,
         navigateAfterSeconds: LandingPage(),
         title: new Text(
           '\n\n\Food Health and Recipes in\n\n Nepali',

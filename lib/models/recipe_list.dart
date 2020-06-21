@@ -934,5 +934,26 @@ final List<RecipeStructure> recipeList = [
         'यसरी तयार भएको खीरलाई चुलोबाट उतार्ने।',
         'अब मनतातो अवस्थामा खीर खाने ।',
       ]),
+  RecipeStructure(
+      name: 'काउलीको पकौडा',
+      ename: 'Kaauli ko Pakaudaa',
+      image:
+          'https://firebasestorage.googleapis.com/v0/b/food-recipes-in-nepali.appspot.com/o/Kaauli%20ko%20Pakaudaa.jpg?alt=media&token=16b146ae-ebf3-4831-80e8-b1cd87fd3dab',
+      veg: true,
+      mainItem: MainItem.vegetable,
+      description:
+          'ताजा काउली र काउलीलाई सुकाएर पनि तरकारी बनाउन सकिन्छ । यदि तपाईंलाई काउली मन पर्छ र त्यसलाई फरक तरिकाले खान चाहनुहुन्छ भने पकौडा बनाएर पनि खान सक्नुहुन्छ ।',
+      ingredients: {
+        'Spice bowl': ' लसुन अदुवाको पेस्ट',
+        'white cauliflower': 'काउली',
+        'chillies': ' हरियो खुर्सानी, रातो खुर्सानीको धुलो',
+        'caraway': 'बेसन,जिरा,चाट मसला',
+      },
+      stepsForCooking: [
+        'बेसनमा जिरा,नुन, लसुन अदुवाको पेस्ट, खुर्सानी, चाट मसला राख्ने ',
+        'अब त्यसलाई थोरै-थोरै पानी राख्दै मिक्स गर्ने ।',
+        'त्यसपछि  त्यसमा काउली राखेर मिक्स गर्ने ।',
+        'एउटा भाँडोमा तेल तताउने र काउली फ्राई गर्ने ।',
+      ]),
       
 ];
