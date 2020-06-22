@@ -1,4 +1,4 @@
-package com.example.food
+package com.foodrecipesinnepali.food
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

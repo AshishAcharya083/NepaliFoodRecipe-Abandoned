@@ -30,9 +30,8 @@ class _WaterScreenState extends State<WaterScreen> {
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
-        
 
-        _scheduleNotification();
+    _scheduleNotification();
   }
 
   Future onSelectNotification(String payload) async {
@@ -107,16 +106,16 @@ class _WaterScreenState extends State<WaterScreen> {
                           onTimeChange: (time) {
                             setState(() {
                               _dateTime = time;
-                              
                             });
                           },
                         ),
                       ),
                     ),
                     FlatButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           // _showNotificationWithDefaultSound();
                           await _scheduleNotification();
+                          // await _repeatNotification();
                         },
                         child: Text('show notification')),
                     Text('Remind me in every: '),
@@ -166,31 +165,39 @@ class _WaterScreenState extends State<WaterScreen> {
     );
   }
 
-  Future<void> _scheduleNotification() async{
-    
+  Future<void> _scheduleNotification() async {
     var scheduledNotificationDateTime =
         DateTime.now().add(Duration(seconds: 5));
-        
-var androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
-  
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
-        'your other channel name', 'your other channel description',
-        importance: Importance.Max,
-        priority: Priority.High,
-        );
-var iOSPlatformChannelSpecifics =
-    IOSNotificationDetails();
-NotificationDetails platformChannelSpecifics = NotificationDetails(
-    androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-await flutterLocalNotificationsPlugin.schedule(
+      'your other channel name',
+      'your other channel description',
+      importance: Importance.Max,
+      priority: Priority.High,
+    );
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.schedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        scheduledNotificationDateTime,
+        platformChannelSpecifics);
+  }
+
+  Future<void> _repeatNotification() async {
   
-    0,
-    'scheduled title',
-    'scheduled body',
-    
-    scheduledNotificationDateTime,
-    platformChannelSpecifics);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'repeating channel id',
+        'repeating channel name',
+        'repeating description');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
+        'repeating body', RepeatInterval.EveryMinute, platformChannelSpecifics);
   }
 
   Future _showNotificationWithDefaultSound() async {
