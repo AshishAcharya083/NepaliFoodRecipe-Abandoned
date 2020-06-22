@@ -1,23 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
+import 'package:food/models/favorites_list.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/screens/cooking_screen.dart';
 import 'package:flutter_image/network.dart';
+import 'package:provider/provider.dart';
 
-class ListScreen extends StatelessWidget {
+class ListScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MyHomePage();
-  }
+  _ListScreenState createState() => _ListScreenState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _ListScreenState extends State<ListScreen> {
   final CategoriesScroller categoriesScroller = CategoriesScroller();
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
@@ -42,151 +37,174 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(
-            'Food List',
-            style: kEnglishTextStyle.copyWith(fontSize: 30, letterSpacing: 0),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search, color: Colors.black),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        body: Container(
-          height: size.height,
-          child: Column(
-            children: <Widget>[
-              // const SizedBox( //responsible for height between appBar and CategoryScroller
-              //   height: 0,
-              // ),
-              AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-                opacity: closeTopContainer ? 0 : 1,
-                child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    width: size.width,
-                    alignment: Alignment.topCenter,
-                    height: closeTopContainer ? 0 : categoryHeight,
-                    child: categoriesScroller),
+    return Consumer<FavoritesList>(
+      builder: (context, favroiteData, child) {
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: Text(
+                'Food List',
+                style:
+                    kEnglishTextStyle.copyWith(fontSize: 30, letterSpacing: 0),
               ),
-              Expanded(
-                  child: ListView.builder(
-                      controller: controller,
-                      itemCount: recipeList.length,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        double scale = 1.0;
-                        if (topContainer > 0.5) {
-                          scale = index + 0.5 - topContainer;
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.search, color: Colors.black),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: Container(
+              height: size.height,
+              child: Column(
+                children: <Widget>[
+                  // const SizedBox( //responsible for height between appBar and CategoryScroller
+                  //   height: 0,
+                  // ),
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 500),
+                    opacity: closeTopContainer ? 0 : 1,
+                    child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        width: size.width,
+                        alignment: Alignment.topCenter,
+                        height: closeTopContainer ? 0 : categoryHeight,
+                        child: categoriesScroller),
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                          controller: controller,
+                          itemCount: recipeList.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            double scale = 1.0;
+                            if (topContainer > 0.5) {
+                              scale = index + 0.5 - topContainer;
 
-                          if (scale < 0) {
-                            scale = 0;
-                          } else if (scale > 1) {
-                            scale = 1;
-                          }
-                        }
+                              if (scale < 0) {
+                                scale = 0;
+                              } else if (scale > 1) {
+                                scale = 1;
+                              }
+                            }
 
-                        if (index < 0 || index > recipeList.length - 1) {
-                          return null;
-                        }
-                        return Opacity(
-                          opacity: scale,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CookingScreen(
-                                            indexOfFood: index,
-                                          )));
-                            },
-                            child: Transform(
-                              transform: Matrix4.identity()
-                                ..scale(scale, scale),
-                              alignment: Alignment.bottomCenter,
-                              child: Align(
-                                heightFactor: 1,
-                                alignment: Alignment.topCenter,
-                                child: Container(
-                                  height: 150,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0)),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: recipeList[index].veg == false
-                                              ? Colors.red
-                                              : Colors.green,
-                                          spreadRadius: 0.5,
-                                          blurRadius: 7,
-                                        )
-                                      ]),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0, vertical: 10),
-                                    child: foodItem(index),
+                            if (index < 0 || index > recipeList.length - 1) {
+                              return null;
+                            }
+                            return Opacity(
+                              opacity: scale,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CookingScreen(
+                                                indexOfFood: index,
+                                              )));
+                                },
+                                child: Transform(
+                                  transform: Matrix4.identity()
+                                    ..scale(scale, scale),
+                                  alignment: Alignment.bottomCenter,
+                                  child: Align(
+                                    heightFactor: 1,
+                                    alignment: Alignment.topCenter,
+                                    child: Container(
+                                      height: 150,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20.0)),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  recipeList[index].veg == false
+                                                      ? Colors.red
+                                                      : Colors.green,
+                                              spreadRadius: 0.5,
+                                              blurRadius: 7,
+                                            )
+                                          ]),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 10),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Expanded(
+                                              flex: 3,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: <Widget>[
+                                                  Text(recipeList[index].name,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: kNepaliTextStyle),
+                                                  IconButton(
+                                                      icon: Icon(
+                                                        Icons.favorite,
+                                                        color: recipeList[index]
+                                                                    .veg ==
+                                                                true
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                      ),
+                                                      onPressed: () {
+
+                                                          if(!favroiteData.favorites.contains(index)){
+                                                             favroiteData
+                                                            .addIndex(index);
+                                                            print('element added');
+                                                          }else print('already has element');
+                                                      
+                                                       
+                                                      })
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                                flex: 4,
+                                                child: Container(
+                                                  child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      child: FadeInImage(
+                                                        placeholder: AssetImage(
+                                                            'images/loading.gif'),
+                                                        image:
+                                                            NetworkImageWithRetry(
+                                                                recipeList[
+                                                                        index]
+                                                                    .image),
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      })),
-            ],
+                            );
+                          })),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Row foodItem(int index) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Expanded(
-          flex: 3,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text(recipeList[index].name,
-                  textAlign: TextAlign.center, style: kNepaliTextStyle),
-              IconButton(
-                  icon: Icon(
-                    Icons.favorite,
-                    color: recipeList[index].veg == true
-                        ? Colors.green
-                        : Colors.red,
-                  ),
-                  onPressed: () {
-                    print('icon button tapped');
-                  })
-            ],
-          ),
-        ),
-        Expanded(
-            flex: 4,
-            child: Container(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: FadeInImage(
-                    placeholder: AssetImage('images/loading.gif'),
-                    image: NetworkImageWithRetry(recipeList[index].image),
-                    fit: BoxFit.cover,
-                  )),
-            )),
-      ],
+        );
+      },
     );
   }
 }
@@ -231,7 +249,7 @@ class CategoriesScroller extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "20 Items",
+                        '${Provider.of<FavoritesList>(context).favorites.length} items',
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ],

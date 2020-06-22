@@ -1,7 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:food/models/favorites_list.dart';
 import 'package:food/screens/feature_screen.dart';
+import 'package:provider/provider.dart';
 import 'homePage.dart';
 import 'package:flutter/services.dart';
 
@@ -44,32 +47,35 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
-          height: 50,
-          backgroundColor: Color(0xFFFFC529),
-          items: <Widget>[
-            Icon(
-              Icons.home,
-              size: 30,
-            ),
-            Icon(
-              Icons.list,
-              size: 30,
-            ),
-            Icon(
-              FontAwesomeIcons.userMd,
-              size: 30,
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+    return ChangeNotifierProvider(
+      create: (context) => FavoritesList(),
+      child: SafeArea(
+        child: Scaffold(
+          bottomNavigationBar: CurvedNavigationBar(
+            height: 50,
+            backgroundColor: Color(0xFFFFC529),
+            items: <Widget>[
+              Icon(
+                Icons.home,
+                size: 30,
+              ),
+              Icon(
+                Icons.list,
+                size: 30,
+              ),
+              Icon(
+                FontAwesomeIcons.userMd,
+                size: 30,
+              ),
+            ],
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+          body: tabs[_currentIndex],
         ),
-        body: tabs[_currentIndex],
       ),
     );
   }

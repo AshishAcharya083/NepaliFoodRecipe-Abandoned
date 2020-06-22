@@ -29,5 +29,4 @@ void main() => runApp(MaterialApp(
         backgroundColor: Colors.white,
         imageBackground: AssetImage('images/splash_egg.jpg'),
         styleTextUnderTheLoader: TextStyle(),
-        
         loaderColor: Colors.yellow)));
