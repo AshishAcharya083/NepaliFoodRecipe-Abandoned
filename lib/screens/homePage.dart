@@ -5,10 +5,12 @@ import 'package:food/components/searchbar.dart';
 import 'package:food/components/cards.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:food/constants.dart';
+import 'package:food/models/favorites_list.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/models/recipe_structure.dart';
 import 'package:food/screens/cooking_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
     _tabController = TabController(vsync: this, length: 4);
     getFood();
+    Provider.of<FavoritesList>(context,listen:false).initiatePref();
   }
 
   void getFood() {
@@ -52,36 +55,41 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 12,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text('Home',
-            style: kEnglishTextStyle.copyWith(
-                color: Colors.black, fontSize: 30, letterSpacing: 0)),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        
-        children: <Widget>[
-          Expanded(
-              child: ListView(
+    return Consumer<FavoritesList>(
+      
+      builder: (context, snapshot,_) {
+        return Scaffold(
+          appBar: AppBar(
+            titleSpacing: 12,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            title: Text('Home',
+                style: kEnglishTextStyle.copyWith(
+                    color: Colors.black, fontSize: 30, letterSpacing: 0)),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            
             children: <Widget>[
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                child: SearchBar(),
-              ),
-              myCarouselSlider(),
-              SizedBox(height: 20,),
-              SizedBox(
-                
-                width: 400, height: 300, child: myTabBar()),
+              Expanded(
+                  child: ListView(
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                    child: SearchBar(),
+                  ),
+                  myCarouselSlider(),
+                  SizedBox(height: 20,),
+                  SizedBox(
+                    
+                    width: 400, height: 300, child: myTabBar()),
+                ],
+              ))
             ],
-          ))
-        ],
-      ),
+          ),
+        );
+      }
     );
   }
 

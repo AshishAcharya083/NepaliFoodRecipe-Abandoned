@@ -1,11 +1,30 @@
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class FavoritesList extends ChangeNotifier{
+class FavoritesList extends ChangeNotifier {
+  List<String> favorites = [];
+   SharedPreferences _pref;
+ 
+  initiatePref()async{
+    _pref= await SharedPreferences.getInstance();
+    if(_pref.getStringList('fav')==null){
+    await _pref.setStringList('fav',[]);
+    }
+  }
 
-  List<int> favorites = [1,2,4];
-
-  void addIndex(int index){
-    favorites.add(index);
+  void addIndex(int index) async {
+    if(!favorites.contains(index)){
+favorites.add(index.toString());
+    }else{
+      
+    }
+    
+    
+    await _pref.setStringList('fav',favorites); 
     notifyListeners();
+  }
+
+  int get favLength {
+    return _pref.getStringList('fav').length;
   }
 }

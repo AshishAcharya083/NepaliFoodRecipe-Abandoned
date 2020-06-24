@@ -24,6 +24,7 @@ class _LandingPageState extends State<LandingPage> {
       DeviceOrientation.portraitDown
       // DeviceOrientation.landscapeLeft,
     ]);
+   
   }
 
   @override
@@ -47,9 +48,14 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => FavoritesList(),
-      child: SafeArea(
+    return MultiProvider
+    (
+        providers: [
+        ChangeNotifierProvider(create: (_) => FavoritesList()),
+       
+      ],
+     
+          child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: CurvedNavigationBar(
             height: 50,
