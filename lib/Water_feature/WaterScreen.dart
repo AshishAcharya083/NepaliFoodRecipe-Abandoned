@@ -30,8 +30,6 @@ class _WaterScreenState extends State<WaterScreen> {
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
-
-    _scheduleNotification();
   }
 
   Future onSelectNotification(String payload) async {
@@ -90,16 +88,16 @@ class _WaterScreenState extends State<WaterScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(
-                              width: 2,
+                              width: 4,
                               color: Colors.lightBlue,
                             ),
                             borderRadius: BorderRadius.circular(20)),
                         child: TimePickerSpinner(
                           is24HourMode: false,
                           normalTextStyle:
-                              TextStyle(fontSize: 24, color: Colors.black),
+                              kEnglishTextStyle,
                           highlightedTextStyle:
-                              TextStyle(fontSize: 24, color: Colors.yellow),
+                              kEnglishTextStyle.copyWith(color: kMainColor,fontSize: 30),
                           spacing: 50,
                           itemHeight: 80,
                           isForce2Digits: true,
@@ -111,13 +109,23 @@ class _WaterScreenState extends State<WaterScreen> {
                         ),
                       ),
                     ),
-                    FlatButton(
-                        onPressed: () async {
-                          // _showNotificationWithDefaultSound();
-                          await _scheduleNotification();
-                          // await _repeatNotification();
-                        },
-                        child: Text('show notification')),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      child: ButtonTheme(
+                        height: 60,
+                        child: RaisedButton(
+                            elevation: 5,
+                            onPressed: () async {
+                              await _scheduleNotification(_dateTime);
+                            },
+                            color: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    width: 4, color: Colors.lightBlue),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text('Set Remainder',style: kEnglishTextStyle.copyWith(color: kMainColor),)),
+                      ),
+                    ),
                     Text('Remind me in every: '),
                     CustomCheckBoxGroup(
                       elevation: 5,
@@ -165,9 +173,9 @@ class _WaterScreenState extends State<WaterScreen> {
     );
   }
 
-  Future<void> _scheduleNotification() async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 5));
+  Future<void> _scheduleNotification(DateTime scheduledDate) async {
+    var scheduledNotificationDateTime = scheduledDate;
+        // DateTime.now().add(Duration(seconds: 5));
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
@@ -185,10 +193,10 @@ class _WaterScreenState extends State<WaterScreen> {
         'scheduled body',
         scheduledNotificationDateTime,
         platformChannelSpecifics);
+    print('Scheduled notification dateTime is ${DateTime.now()}');
   }
 
   Future<void> _repeatNotification() async {
-  
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'repeating channel id',
         'repeating channel name',

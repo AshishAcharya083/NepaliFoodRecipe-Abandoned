@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food/models/favorites_list.dart';
 import 'package:food/screens/landing_page.dart';
-import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
@@ -10,7 +8,7 @@ void main() => runApp(MaterialApp(
         scaffoldBackgroundColor: Color(0xFFF5F5F5)),
     home: SplashScreen(
         
-    seconds: 10,
+    seconds: 0,
     navigateAfterSeconds: LandingPage(),
     title: new Text(
       '\n\n\Food Health and Recipes in\n\n Nepali',
