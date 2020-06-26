@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'dart:async';
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
-
+import 'package:food/BMI_feature/bottom_button.dart';
 import 'package:food/constants.dart';
 
 class WaterScreen extends StatefulWidget {
@@ -41,10 +40,12 @@ class _WaterScreenState extends State<WaterScreen> {
             ));
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           elevation: 5,
           automaticallyImplyLeading: true,
@@ -70,101 +71,128 @@ class _WaterScreenState extends State<WaterScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                    child: ListView(
-                  children: <Widget>[
-                    Text(
-                      'Remind me to drink water at: ',
-                      style: kNepaliTextStyle.copyWith(letterSpacing: 0),
-                    ),
-                    Card(
-                      margin: EdgeInsets.symmetric(vertical: 20),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      color: Colors.blue,
-                      elevation: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 4,
-                              color: Colors.lightBlue,
-                            ),
+                  flex: 5,
+                  child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
+                    children: <Widget>[
+                      Text(
+                        'Remind me to drink water at: ',
+                        style: kNepaliTextStyle.copyWith(letterSpacing: 0),
+                      ),
+                      Card(
+                        margin: EdgeInsets.symmetric(vertical: 22),
+                        shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        child: TimePickerSpinner(
-                          is24HourMode: false,
-                          normalTextStyle:
-                              kEnglishTextStyle,
-                          highlightedTextStyle:
-                              kEnglishTextStyle.copyWith(color: kMainColor,fontSize: 30),
-                          spacing: 50,
-                          itemHeight: 80,
-                          isForce2Digits: true,
-                          onTimeChange: (time) {
-                            setState(() {
-                              _dateTime = time;
-                            });
-                          },
+                        color: Colors.blue,
+                        elevation: 3,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 4,
+                                color: Colors.lightBlue,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: TimePickerSpinner(
+                            is24HourMode: false,
+                            normalTextStyle: kEnglishTextStyle,
+                            highlightedTextStyle: kEnglishTextStyle.copyWith(
+                                color: kMainColor, fontSize: 30),
+                            spacing: 50,
+                            itemHeight: 80,
+                            isForce2Digits: true,
+                            onTimeChange: (time) {
+                              setState(() {
+                                _dateTime = time;
+                              });
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                      child: ButtonTheme(
-                        height: 60,
-                        child: RaisedButton(
-                            elevation: 5,
-                            onPressed: () async {
-                              await _scheduleNotification(_dateTime);
-                            },
-                            color: Colors.blue,
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 4, color: Colors.lightBlue),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text('Set Remainder',style: kEnglishTextStyle.copyWith(color: kMainColor),)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                        child: ButtonTheme(
+                          height: 60,
+                          child: RaisedButton(
+                              elevation: 5,
+                              onPressed: () async {
+                                await _scheduleNotification(_dateTime);
+                                _displaySnackBar(context,
+                                    snackMessage: 'Remainder set');
+                              },
+                              color: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 4, color: Colors.lightBlue),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Text(
+                                'Set Remainder',
+                                style: kEnglishTextStyle.copyWith(
+                                    color: kMainColor),
+                              )),
+                        ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: Divider(
+                          height: 1,
+                          thickness: 2,
+                          color: kMainColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                    child: ButtonTheme(
+                  minWidth: double.infinity,
+                  shape: RoundedRectangleBorder(
+                      side: BorderSide(width: 4, color: Colors.lightBlue),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: RaisedButton(
+                    elevation: 5,
+                    onPressed: () async {
+                      _displaySnackBar(context,
+                          snackMessage: 'You will be notified at every hour');
+                      await _repeatNotification();
+                    },
+                    child: Text(
+                      'Remind me Every Hour',
+                      style: kEnglishTextStyle,
                     ),
-                    Text('Remind me in every: '),
-                    CustomCheckBoxGroup(
-                      elevation: 5,
-                      buttonColor: Theme.of(context).canvasColor,
-                      buttonLables: [
-                        "30 min",
-                        "1 hour",
-                        "1.5 hours",
-                        "2 hours",
-                        "3 hours",
-                        "4 hours",
-                        "5 hours",
-                      ],
-                      buttonValuesList: [
-                        "30",
-                        "60",
-                        "90",
-                        "120",
-                        "180",
-                        "240",
-                        "290",
-                      ],
-                      checkBoxButtonValues: (values) {
-                        print('initial value $values');
-
-                        if (values.isNotEmpty) {
-                          values.removeRange(0, values.length - 1);
-                        }
-                      },
-                      defaultSelected: "Monday",
-                      horizontal: false,
-                      width: 150,
-                      height: 40,
-                      enableShape: true,
-                      selectedColor: kMainColor,
-                      padding: 7,
-                    )
-                  ],
-                ))
+                  ),
+                )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 40.0, vertical: 15),
+                  child: ButtonTheme(
+                    height: 60,
+                    child: RaisedButton(
+                        elevation: 5,
+                        onPressed: () async {
+                          await flutterLocalNotificationsPlugin.cancel(0);
+                          _displaySnackBar(context,
+                              snackMessage:
+                                  'All notifications are Cancelled!!');
+                        },
+                        color: Color(0xFFEB1555),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 4, color: Colors.lightBlue),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: FittedBox(
+                          alignment: Alignment.center,
+                          fit: BoxFit.cover,
+                          child: Text(
+                            'Cancel All Notification',
+                            style:
+                                kEnglishTextStyle.copyWith(color: kMainColor),
+                          ),
+                        )),
+                  ),
+                ),
               ],
             ),
           ),
@@ -173,9 +201,14 @@ class _WaterScreenState extends State<WaterScreen> {
     );
   }
 
+  _displaySnackBar(BuildContext context, {String snackMessage}) {
+    final snackBar = SnackBar(content: Text(snackMessage));
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
   Future<void> _scheduleNotification(DateTime scheduledDate) async {
     var scheduledNotificationDateTime = scheduledDate;
-        // DateTime.now().add(Duration(seconds: 5));
+    // DateTime.now().add(Duration(seconds: 5));
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
@@ -205,27 +238,6 @@ class _WaterScreenState extends State<WaterScreen> {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.periodicallyShow(0, 'repeating title',
-        'repeating body', RepeatInterval.EveryMinute, platformChannelSpecifics);
-  }
-
-  Future _showNotificationWithDefaultSound() async {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'Notification_channel_id',
-        'channel Name',
-        'Here we will put the description about the channel',
-        importance: Importance.Max,
-        priority: Priority.High);
-
-    var iOSPlatformChannelSpecifics =
-        new IOSNotificationDetails(presentSound: false);
-    var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      'DRINK WATER',
-      'Hidrate youself',
-      platformChannelSpecifics,
-      payload: 'No_Sound',
-    );
+        'repeating body', RepeatInterval.Hourly, platformChannelSpecifics);
   }
 }

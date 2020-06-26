@@ -68,9 +68,7 @@ class _CookingScreenState extends State<CookingScreen> {
                             bottomLeft: Radius.circular(30)),
                         image: DecorationImage(
                             image: NetworkImageWithRetry(recipeList[widget.indexOfFood].image) ,
-                            
-                            // NetworkImage(
-                            //     recipeList[widget.indexOfFood].image),
+                           
                             fit: BoxFit.cover),
                             ),
                   )),

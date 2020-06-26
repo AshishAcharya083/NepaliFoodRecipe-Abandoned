@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:food/models/favorites_list.dart';
-import 'package:provider/provider.dart';
+import 'package:food/models/recipe_list.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  @override
-  _FavoriteScreenState createState() => _FavoriteScreenState();
-}
+class FavoriteScreen extends StatelessWidget {
+  final List myIndexList;
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  FavoriteScreen({this.myIndexList});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoritesList>(builder: (context, snapshot, _) {
-      return SafeArea(
+    print(myIndexList);
+    return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('My Favorites'),
-          ),
-          body: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, int index) {
-                return Container(
-                  child: Text('${snapshot.favLength} items'),
-                );
-              }),
-        ),
-      );
-    });
+            body: Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: ListView.builder(
+          itemCount: myIndexList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+               height: 200,
+      width: MediaQuery.of(context).size.width * 0.8,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                child: Image(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(recipeList[myIndexList[index]].image),
+                ),
+              )),
+            );
+          }),
+    )));
   }
 }

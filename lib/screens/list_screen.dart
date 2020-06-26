@@ -39,7 +39,7 @@ class _ListScreenState extends State<ListScreen> {
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return Consumer<FavoritesList>(
-      builder: (context, favroiteData, _) {
+      builder: (context, snapshot, _) {
         return SafeArea(
           child: Scaffold(
             backgroundColor: Colors.white,
@@ -153,7 +153,7 @@ class _ListScreenState extends State<ListScreen> {
                                                       style: kNepaliTextStyle),
                                                   IconButton(
                                                       icon: Icon(
-                                                        Icons.favorite,
+                                                        Icons.star,
                                                         color: recipeList[index]
                                                                     .veg ==
                                                                 true
@@ -161,10 +161,10 @@ class _ListScreenState extends State<ListScreen> {
                                                             : Colors.red,
                                                       ),
                                                       onPressed: () {
-                                                        if (!favroiteData
-                                                            .favorites
-                                                            .contains(index)) {
-                                                          favroiteData
+                                                        if (!snapshot.favorites
+                                                            .contains(index
+                                                                .toString())) {
+                                                          snapshot
                                                               .addIndex(index);
                                                         }
                                                       })
@@ -228,10 +228,14 @@ class CategoriesScroller extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
+                    final List myList = snapshot.indexList;
+                     final List<int> myIntList = myList.map((e) => int.parse(e)).toList();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FavoriteScreen()));
+                            builder: (context) => FavoriteScreen(
+                                  myIndexList: myIntList,
+                                )));
                   },
                   child: Container(
                     width: 150,
