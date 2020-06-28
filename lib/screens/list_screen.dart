@@ -35,6 +35,13 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+    
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;

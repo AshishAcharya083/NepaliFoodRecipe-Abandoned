@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:food/models/recipe_list.dart';
-
 class FavoriteScreen extends StatelessWidget {
   final List myIndexList;
 
@@ -20,13 +19,20 @@ class FavoriteScreen extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-               height: 200,
       width: MediaQuery.of(context).size.width * 0.8,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                child: Image(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(recipeList[myIndexList[index]].image),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 400,
+                      width: 400,
+                      child: Image(
+                        fit: BoxFit.contain,
+                        image: NetworkImage(recipeList[myIndexList[index]].image),
+                      ),
+                    ),
+                  ],
                 ),
               )),
             );

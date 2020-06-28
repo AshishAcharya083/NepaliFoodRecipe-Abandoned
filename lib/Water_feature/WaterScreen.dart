@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'dart:async';
-import 'package:food/BMI_feature/bottom_button.dart';
 import 'package:food/constants.dart';
 
 class WaterScreen extends StatefulWidget {

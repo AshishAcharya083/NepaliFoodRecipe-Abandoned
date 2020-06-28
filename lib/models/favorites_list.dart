@@ -2,16 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavoritesList extends ChangeNotifier {
-  List<String> favorites = [];
+  List<String> favorites;
   SharedPreferences _pref;
 
   
 
   initiatePref() async {
+    
     _pref = await SharedPreferences.getInstance();
+
     if (_pref.getStringList('fav') == null) {
       await _pref.setStringList('fav', []);
     }
+    favorites = _pref.getStringList('fav');
+
+    print("inital favorites length is ${favorites.length} ");
   }
 
   void addIndex(int index) async {
@@ -24,7 +29,8 @@ class FavoritesList extends ChangeNotifier {
     return _pref.getStringList('fav').length;
   }
   List get indexList {
-    List myIndexList = favorites;
+    List myIndexList = _pref.getStringList('fav');
+    print('myIndex list is ${_pref.getStringList('fav')}');
     return myIndexList;
   }
 }
