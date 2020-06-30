@@ -187,6 +187,7 @@ class _ListScreenState extends State<ListScreen> {
                                                               15),
                                                       child: FadeInImage(
                                                         placeholder: AssetImage(
+                                                          
                                                             'images/loading.gif'),
                                                         image:
                                                             NetworkImageWithRetry(

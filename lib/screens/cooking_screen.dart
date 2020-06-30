@@ -55,7 +55,7 @@ class _CookingScreenState extends State<CookingScreen> {
                       children: <Widget>[
                         Text(
                           recipeList[widget.indexOfFood].name,
-                          style: kNepaliTextStyle,
+                          style: kNepaliTextStyle.copyWith(color:Colors.white),
                         )
                       ],
                     ),

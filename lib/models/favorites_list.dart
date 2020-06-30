@@ -16,7 +16,6 @@ class FavoritesList extends ChangeNotifier {
     }
     favorites = _pref.getStringList('fav');
 
-    print("inital favorites length is ${favorites.length} ");
   }
 
   void addIndex(int index) async {
@@ -30,7 +29,6 @@ class FavoritesList extends ChangeNotifier {
   }
   List get indexList {
     List myIndexList = _pref.getStringList('fav');
-    print('myIndex list is ${_pref.getStringList('fav')}');
     return myIndexList;
   }
 }
