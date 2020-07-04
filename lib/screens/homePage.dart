@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<int> vegetable = [];
   List<int> meat = [];
   List<int> popular = [];
+  List<int> fruit = [];
 
   void initState() {
     super.initState();
@@ -48,6 +49,12 @@ class _HomeScreenState extends State<HomeScreen>
       if (recipeList[i].mainItem == MainItem.meat) {
         setState(() {
           meat.add(i);
+        });
+      }
+
+      if(recipeList[i].mainItem == MainItem.fruit){
+        setState(() {
+          fruit.add(i);
         });
       }
     }
@@ -183,26 +190,46 @@ class _HomeScreenState extends State<HomeScreen>
               itemCount: vegetable.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: CategoryCard(
-                      networkImage:
-                          recipeList[vegetable[index]].image ?? errorImage,
-                      foodName: recipeList[vegetable[index]].name),
+                return GestureDetector(
+                   onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CookingScreen(
+                                      indexOfFood: vegetable[index],
+                                    )));
+                      },
+                                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: CategoryCard(
+                        networkImage:
+                            recipeList[vegetable[index]].image ?? errorImage,
+                        foodName: recipeList[vegetable[index]].name),
+                  ),
                 );
               },
             ),
             ListView.builder(
               //OPTION FRUIT
-              itemCount: vegetable.length,
+              itemCount: fruit.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: CategoryCard(
-                      networkImage:
-                          recipeList[vegetable[index]].image ?? errorImage,
-                      foodName: recipeList[vegetable[index]].name),
+                return GestureDetector(
+                   onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CookingScreen(
+                                      indexOfFood: fruit[index],
+                                    )));
+                      },
+                                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: CategoryCard(
+                        networkImage:
+                            recipeList[vegetable[index]].image ?? errorImage,
+                        foodName: recipeList[fruit[index]].name),
+                  ),
                 );
               },
             ),
@@ -211,11 +238,21 @@ class _HomeScreenState extends State<HomeScreen>
               itemCount: meat.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: CategoryCard(
-                      networkImage: recipeList[meat[index]].image ?? errorImage,
-                      foodName: recipeList[meat[index]].name),
+                return GestureDetector(
+                   onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CookingScreen(
+                                      indexOfFood: meat[index],
+                                    )));
+                      },
+                                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: CategoryCard(
+                        networkImage: recipeList[meat[index]].image ?? errorImage,
+                        foodName: recipeList[meat[index]].name),
+                  ),
                 );
               },
             ),

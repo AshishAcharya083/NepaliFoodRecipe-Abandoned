@@ -12,7 +12,7 @@
       
      <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Food Health and Recipes in Nepali"
+        android:label="Food Recipes In Nepali"
         android:icon="@mipmap/ic_launcher">
         
         <activity

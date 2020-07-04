@@ -7,6 +7,7 @@ import 'package:food/screens/cooking_screen.dart';
 import 'package:flutter_image/network.dart';
 import 'package:food/screens/favorites_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:food/models/searching.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -60,9 +61,20 @@ class _ListScreenState extends State<ListScreen> {
               backgroundColor: Colors.transparent,
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.search, color: Colors.black),
-                  onPressed: () {},
-                ),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: ArticleSearch(),
+                );
+              },
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              icon: Icon(
+                Icons.search,
+                size: 30,
+                color: Colors.black,
+              ),
+              color: Colors.black87,
+            ),
               ],
             ),
             body: Container(

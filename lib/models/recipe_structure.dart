@@ -16,14 +16,14 @@ class RecipeStructure {
 
   RecipeStructure(
       {@required this.name,
-      this.ename,
+      this.ename = 'Food Name',
       this.mainItem,
-      this.veg,
-      this.popular,
+      this.veg = true,
+      this.popular = false,
       this.category,
-      this.image,
-      this.description,
-      this.ingredients,
-      this.stepsForCooking,
+      this.image = "https://images.unsplash.com/photo-1558467523-46113f1fcf72?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80",
+      this.description = 'Popular Food',
+      this.ingredients  = const {'food ingredient':'various food Ingredient'},
+      this.stepsForCooking = const ['comming soon','Coming soon'],
       });
 }
