@@ -162,10 +162,12 @@ class _ListScreenState extends State<ListScreen> {
                                             Expanded(
                                               flex: 3,
                                               child: Column(
+                                                
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: <Widget>[
+                                                  
                                                   Text(recipeList[index].name,
                                                       textAlign:
                                                           TextAlign.center,

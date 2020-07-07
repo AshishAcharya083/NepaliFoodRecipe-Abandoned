@@ -221,8 +221,8 @@ class _WaterScreenState extends State<WaterScreen> {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
         0,
-        'scheduled title',
-        'scheduled body',
+        'Please drink water',
+        'Water drinking remainder',
         scheduledNotificationDateTime,
         platformChannelSpecifics);
     print('Scheduled notification dateTime is ${DateTime.now()}');

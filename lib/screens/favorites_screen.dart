@@ -12,6 +12,15 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+           title: Text("My Favorites",style: kEnglishTextStyle.copyWith(fontSize: 30),),
+           backgroundColor: Colors.transparent,
+           elevation: 0,
+            leading: IconButton(icon: Icon(Icons.arrow_back_ios,color: Colors.black,), onPressed: (){
+              Navigator.pop(context);
+            },),
+          ),
             body: Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
