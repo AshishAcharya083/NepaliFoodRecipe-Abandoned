@@ -21,7 +21,7 @@ class RecipeStructure {
       this.veg = true,
       this.popular = false,
       this.category,
-      this.image = "https://images.unsplash.com/photo-1558467523-46113f1fcf72?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80",
+      this.image = "https://firebasestorage.googleapis.com/v0/b/food-recipes-in-nepali.appspot.com/o/404.jpg?alt=media&token=66b1ec68-1687-45e8-9f57-c5a8101c7016",
       this.description = 'Popular Food',
       this.ingredients  = const {'food ingredient':'various food Ingredient'},
       this.stepsForCooking = const ['comming soon','Coming soon'],

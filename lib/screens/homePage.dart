@@ -11,7 +11,9 @@ import 'package:food/models/recipe_structure.dart';
 import 'package:food/screens/cooking_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
+import 'package:food/models/ads.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -24,80 +26,61 @@ class _HomeScreenState extends State<HomeScreen>
   List<int> vegetable = [];
   List<int> meat = [];
   List<int> popular = [];
-  List<int> fruit = [];
+  List<int> fruitAndDrinks = [];
+  Widget _currentAd ;
 
   void initState() {
     super.initState();
+    FacebookAudienceNetwork.init(
+      testingId: "b97781a1-356c-4736-bbb6-14dfd078f9ed",
+    );
     _tabController = TabController(vsync: this, length: 4);
     getFood();
-    Provider.of<FavoritesList>(context,listen:false).initiatePref();
-  }
-
-  void getFood() {
-    for (int i = 0; i < recipeList.length; i++) {
-      if (recipeList[i].popular == true) {
-        setState(() {
-          popular.add(i);
-        });
-      }
-
-      if (recipeList[i].veg == true) {
-        setState(() {
-          vegetable.add(i);
-        });
-      }
-      if (recipeList[i].mainItem == MainItem.meat) {
-        setState(() {
-          meat.add(i);
-        });
-      }
-
-      if(recipeList[i].mainItem == MainItem.fruit){
-        setState(() {
-          fruit.add(i);
-        });
-      }
-    }
+    Provider.of<FavoritesList>(context, listen: false).initiatePref();
+    
+    setState(() {
+      _currentAd = myBannerAd();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoritesList>(
-      
-      builder: (context, snapshot,_) {
-        return Scaffold(
-          appBar: AppBar(
-            titleSpacing: 12,
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            title: Text('Home',
-                style: kEnglishTextStyle.copyWith(
-                    color: Colors.black, fontSize: 30, letterSpacing: 0)),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            
-            children: <Widget>[
-              Expanded(
-                  child: ListView(
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                    child: SearchBar(),
-                  ),
-                  myCarouselSlider(),
-                  SizedBox(height: 20,),
-                  SizedBox(
-                    
-                    width: 400, height: 300, child: myTabBar()),
-                ],
-              ))
-            ],
-          ),
-        );
-      }
-    );
+    
+    return Consumer<FavoritesList>(builder: (context, snapshot, _) {
+      return Scaffold(
+        appBar: AppBar(
+          titleSpacing: 12,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Text('Home',
+              style: kEnglishTextStyle.copyWith(
+                  color: Colors.black, fontSize: 30, letterSpacing: 0)),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
+              children: <Widget>[
+                
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 10),
+                  child: SearchBar(),
+                ),
+                myCarouselSlider(),
+                SizedBox(
+                  height: 20,
+                ),
+                SizedBox(width: 400, height: 300, child: myTabBar()),
+                Container(child: _currentAd),
+              ],
+            ))
+          ],
+        ),
+      );
+    });
   }
 
   CarouselSlider myCarouselSlider() {
@@ -151,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen>
                   text: 'सागसब्जी',
                 ),
                 Tab(
-                  text: 'फल',
+                  text: 'फल र जुस',
                 ),
                 Tab(
                   text: 'मासु',
@@ -191,15 +174,15 @@ class _HomeScreenState extends State<HomeScreen>
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
                 return GestureDetector(
-                   onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CookingScreen(
-                                      indexOfFood: vegetable[index],
-                                    )));
-                      },
-                                  child: Padding(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CookingScreen(
+                                  indexOfFood: vegetable[index],
+                                )));
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: CategoryCard(
                         networkImage:
@@ -211,24 +194,24 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             ListView.builder(
               //OPTION FRUIT
-              itemCount: fruit.length,
+              itemCount: fruitAndDrinks.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
                 return GestureDetector(
-                   onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CookingScreen(
-                                      indexOfFood: fruit[index],
-                                    )));
-                      },
-                                  child: Padding(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CookingScreen(
+                                  indexOfFood: fruitAndDrinks[index],
+                                )));
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: CategoryCard(
-                        networkImage:
-                            recipeList[vegetable[index]].image ?? errorImage,
-                        foodName: recipeList[fruit[index]].name),
+                        networkImage: recipeList[fruitAndDrinks[index]].image ??
+                            errorImage,
+                        foodName: recipeList[fruitAndDrinks[index]].name),
                   ),
                 );
               },
@@ -239,18 +222,19 @@ class _HomeScreenState extends State<HomeScreen>
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, int index) {
                 return GestureDetector(
-                   onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CookingScreen(
-                                      indexOfFood: meat[index],
-                                    )));
-                      },
-                                  child: Padding(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CookingScreen(
+                                  indexOfFood: meat[index],
+                                )));
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: CategoryCard(
-                        networkImage: recipeList[meat[index]].image ?? errorImage,
+                        networkImage:
+                            recipeList[meat[index]].image ?? errorImage,
                         foodName: recipeList[meat[index]].name),
                   ),
                 );
@@ -260,5 +244,33 @@ class _HomeScreenState extends State<HomeScreen>
         ))
       ],
     );
+  }
+
+  void getFood() {
+    for (int i = 0; i < recipeList.length; i++) {
+      if (recipeList[i].popular == true) {
+        setState(() {
+          popular.add(i);
+        });
+      }
+
+      if (recipeList[i].veg == true) {
+        setState(() {
+          vegetable.add(i);
+        });
+      }
+      if (recipeList[i].mainItem == MainItem.meat) {
+        setState(() {
+          meat.add(i);
+        });
+      }
+
+      if (recipeList[i].mainItem == MainItem.fruit ||
+          recipeList[i].category == Category.drinks) {
+        setState(() {
+          fruitAndDrinks.add(i);
+        });
+      }
+    }
   }
 }
