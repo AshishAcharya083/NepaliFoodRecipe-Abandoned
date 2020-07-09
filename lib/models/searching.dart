@@ -25,11 +25,7 @@ class ArticleSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('This is results'),
-      ),
-    );
+    return Center(child: Text('Look for it in food List'));
   }
 
   @override
@@ -39,7 +35,7 @@ class ArticleSearch extends SearchDelegate {
     myList = recipeList.where((element) {
       return element.ename.toLowerCase().contains(query.toLowerCase());
     }).toList();
-    print(myList.length);
+
     if (myList.isNotEmpty) {
       return ListView.builder(
           itemCount: myList.length > 5 ? 5 : myList.length,

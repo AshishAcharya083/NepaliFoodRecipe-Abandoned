@@ -1,11 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:food/BMI_feature/input_page.dart';
 import 'package:food/constants.dart';
 import 'package:food/Water_feature/WaterScreen.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
+import 'package:food/models/ads.dart';
 
 class FeatureScreen extends StatelessWidget {
+   
   @override
   Widget build(BuildContext context) {
+    FacebookAudienceNetwork.init(
+      testingId: "b9f2908b-1a6b-4a5b-b862-ded7ce289e41",
+    );
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -45,11 +52,13 @@ class FeatureScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15.0),
                   child: GestureDetector(
-                    onTap: ()
-                    {
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => WaterScreen()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WaterScreen()));
                     },
-                                      child: ListItem(
+                    child: ListItem(
                         title: 'WATER Drinking Remainder',
                         listOfColors: [
                           Colors.blueAccent,
@@ -58,6 +67,18 @@ class FeatureScreen extends StatelessWidget {
                         ]),
                   ),
                 ),
+                Divider(
+                  
+                  color: Colors.blue,
+                  thickness: 2,
+                ),
+                Container(
+                  
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    ),
+                  child: biggerNativeAd()
+                )
               ],
             ),
           )),

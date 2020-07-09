@@ -29,8 +29,10 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          
-          title: Text('BMI CALCULATOR',style: kEnglishTextStyle.copyWith(fontSize: 30,letterSpacing: 0),),
+          title: Text(
+            'BMI CALCULATOR',
+            style: kEnglishTextStyle.copyWith(fontSize: 30, letterSpacing: 0),
+          ),
           elevation: 0,
           backgroundColor: Colors.transparent,
           iconTheme: IconThemeData(
@@ -52,7 +54,6 @@ class _InputPageState extends State<InputPage> {
                           });
                         },
                         cardChild: IconContent(
-                          
                             icon: FontAwesomeIcons.mars, genderText: 'MALE'),
                         colour: selectedGender == Gender.male
                             ? kActiveCardColor
@@ -131,10 +132,11 @@ class _InputPageState extends State<InputPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RoundIconButton(
+                            
                             icon: FontAwesomeIcons.minus,
                             onpressed: () {
                               setState(() {
-                                weight--;
+                                if (weight > 0) weight--;
                               });
                             },
                           ),
@@ -174,7 +176,7 @@ class _InputPageState extends State<InputPage> {
                                 icon: FontAwesomeIcons.minus,
                                 onpressed: () {
                                   setState(() {
-                                    age--;
+                                    if (age > 0) age--;
                                   });
                                 }),
                             SizedBox(width: 10.0),
@@ -195,7 +197,7 @@ class _InputPageState extends State<InputPage> {
               ],
             )),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal:15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: BottomButton(
                 buttonText: 'CALCULATE',
                 onButtonPressed: () {

@@ -1,13 +1,17 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food/constants.dart';
+import 'package:food/models/ads.dart';
 import 'package:food/models/favorites_list.dart';
 import 'package:food/models/recipe_list.dart';
 import 'package:food/screens/cooking_screen.dart';
 import 'package:flutter_image/network.dart';
 import 'package:food/screens/favorites_screen.dart';
+import 'package:food/screens/newest_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:food/models/searching.dart';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -19,6 +23,7 @@ class _ListScreenState extends State<ListScreen> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+  
 
   @override
   void initState() {
@@ -31,6 +36,10 @@ class _ListScreenState extends State<ListScreen> {
       setState(() {
         topContainer = value;
         closeTopContainer = controller.offset > 50;
+
+        FacebookAudienceNetwork.init(
+          testingId: "b97781a1-356c-4736-bbb6-14dfd078f9ed",
+        );
       });
     });
   }
@@ -39,11 +48,11 @@ class _ListScreenState extends State<ListScreen> {
   void dispose() {
     super.dispose();
     controller.dispose();
-    
   }
 
   @override
   Widget build(BuildContext context) {
+    
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return Consumer<FavoritesList>(
@@ -61,29 +70,26 @@ class _ListScreenState extends State<ListScreen> {
               backgroundColor: Colors.transparent,
               actions: <Widget>[
                 IconButton(
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: ArticleSearch(),
-                );
-              },
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              icon: Icon(
-                Icons.search,
-                size: 30,
-                color: Colors.black,
-              ),
-              color: Colors.black87,
-            ),
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: ArticleSearch(),
+                    );
+                  },
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  icon: Icon(
+                    Icons.search,
+                    size: 30,
+                    color: Colors.black,
+                  ),
+                  color: Colors.black87,
+                ),
               ],
             ),
             body: Container(
               height: size.height,
               child: Column(
                 children: <Widget>[
-                  // const SizedBox( //responsible for height between appBar and CategoryScroller
-                  //   height: 0,
-                  // ),
                   AnimatedOpacity(
                     duration: const Duration(milliseconds: 500),
                     opacity: closeTopContainer ? 0 : 1,
@@ -97,7 +103,7 @@ class _ListScreenState extends State<ListScreen> {
                   Expanded(
                       child: ListView.builder(
                           controller: controller,
-                          itemCount: recipeList.length,
+                          itemCount: recipeList.length + 2,
                           physics: BouncingScrollPhysics(),
                           itemBuilder: (context, index) {
                             double scale = 1.0;
@@ -162,12 +168,10 @@ class _ListScreenState extends State<ListScreen> {
                                             Expanded(
                                               flex: 3,
                                               child: Column(
-                                                
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: <Widget>[
-                                                  
                                                   Text(recipeList[index].name,
                                                       textAlign:
                                                           TextAlign.center,
@@ -201,7 +205,6 @@ class _ListScreenState extends State<ListScreen> {
                                                               15),
                                                       child: FadeInImage(
                                                         placeholder: AssetImage(
-                                                          
                                                             'images/loading.gif'),
                                                         image:
                                                             NetworkImageWithRetry(
@@ -251,7 +254,8 @@ class CategoriesScroller extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     final List myList = snapshot.indexList;
-                     final List<int> myIntList = myList.map((e) => int.parse(e)).toList();
+                    final List<int> myIntList =
+                        myList.map((e) => int.parse(e)).toList();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -290,66 +294,53 @@ class CategoriesScroller extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: 150,
-                  margin: EdgeInsets.only(right: 20),
-                  height: categoryHeight,
-                  decoration: BoxDecoration(
-                      color: Colors.blue.shade400,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Newest",
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                GestureDetector(
+                   onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewestScreen()));
+                    },
+                                  child: Container(
+                    width: 150,
+                    margin: EdgeInsets.only(right: 20),
+                    height: categoryHeight,
+                    decoration: BoxDecoration(
+                        color: Colors.blue.shade400,
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Newest",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "20 Items",
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "20 Items",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
                   ),
                 ),
                 Container(
-                  width: 150,
+                  width: 250,
                   margin: EdgeInsets.only(right: 20),
                   height: categoryHeight,
                   decoration: BoxDecoration(
                       color: Colors.lightBlueAccent.shade400,
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Super\nSaving",
-                          style: TextStyle(
-                              fontSize: 25,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "20 Items",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
-                        ),
-                      ],
-                    ),
+                    padding: const EdgeInsets.all(10.0),
+                    child: nativeAd(),
                   ),
                 ),
               ],

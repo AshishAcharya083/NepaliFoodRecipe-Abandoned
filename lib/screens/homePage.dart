@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Consumer<FavoritesList>(builder: (context, snapshot, _) {
       return Scaffold(
         appBar: AppBar(
+          
           titleSpacing: 12,
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -56,9 +57,11 @@ class _HomeScreenState extends State<HomeScreen>
               style: kEnglishTextStyle.copyWith(
                   color: Colors.black, fontSize: 30, letterSpacing: 0)),
         ),
+        
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            
             Expanded(
                 child: ListView(
                   physics: BouncingScrollPhysics(),

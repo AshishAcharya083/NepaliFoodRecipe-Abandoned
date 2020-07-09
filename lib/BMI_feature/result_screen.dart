@@ -15,24 +15,31 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        
+        appBar: AppBar(
+          
+          
+          leading: IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios),color: Colors.black),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+                      'Your Result',
+                      
+                      style: kEnglishTextStyle.copyWith(
+                          fontSize: 40, letterSpacing: 0),
+                    ),
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Expanded(
-                  child: Container(
-                    
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Your Result',
-                      
-                      style: kEnglishTextStyle.copyWith(
-                          fontSize: 40, letterSpacing: 0),
-                    ),
-                  ),
-                ),
+               
                 Expanded(
                     flex: 6,
                     child: Container(

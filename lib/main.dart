@@ -5,8 +5,9 @@ import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(MaterialApp(
     theme: ThemeData(
-        accentColor: Color(0xFFFFC529),
-        scaffoldBackgroundColor: Color(0xFFF5F5F5)),
+        // accentColor: Color(0xFFFFC529),
+        scaffoldBackgroundColor: Color(0xFFF5F5F5)
+        ),
     home: SplashScreen(
         seconds: 3,
         navigateAfterSeconds: LandingPage(),
