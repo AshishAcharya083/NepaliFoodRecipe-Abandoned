@@ -4,34 +4,32 @@ import 'constants.dart';
 import 'bottom_button.dart';
 
 class ResultScreen extends StatelessWidget {
+   final String bmiResult;
+  final String resultText;
+  final String interpretation;
   ResultScreen(
+    
       {@required this.resultText,
       @required this.bmiResult,
       @required this.interpretation});
-  final String bmiResult;
-  final String resultText;
-  final String interpretation;
+ 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
         appBar: AppBar(
-          
-          
           leading: IconButton(
-            onPressed: (){
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios),color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios),
+              color: Colors.black),
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
-                      'Your Result',
-                      
-                      style: kEnglishTextStyle.copyWith(
-                          fontSize: 40, letterSpacing: 0),
-                    ),
+            'Your Result',
+            style: kEnglishTextStyle.copyWith(fontSize: 40, letterSpacing: 0),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -39,7 +37,6 @@ class ResultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-               
                 Expanded(
                     flex: 6,
                     child: Container(
@@ -74,7 +71,7 @@ class ResultScreen extends StatelessWidget {
                       ),
                     )),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical:8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Expanded(
                       child: BottomButton(
                           buttonText: 'RE-CALCULATE',
