@@ -25,9 +25,8 @@ class _CookingScreenState extends State<CookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       backgroundColor: Colors.white,
-      resizeToAvoidBottomPadding: true,
+      // resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       body: SafeArea(
           child: CustomScrollView(
@@ -55,7 +54,7 @@ class _CookingScreenState extends State<CookingScreen> {
                       children: <Widget>[
                         Text(
                           recipeList[widget.indexOfFood].name,
-                          style: kNepaliTextStyle.copyWith(color:Colors.white),
+                          style: kNepaliTextStyle.copyWith(color: Colors.white),
                         )
                       ],
                     ),
@@ -63,14 +62,14 @@ class _CookingScreenState extends State<CookingScreen> {
                   collapseMode: CollapseMode.parallax,
                   background: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(30),
-                            bottomLeft: Radius.circular(30)),
-                        image: DecorationImage(
-                            image: NetworkImageWithRetry(recipeList[widget.indexOfFood].image) ,
-                           
-                            fit: BoxFit.cover),
-                            ),
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(30),
+                          bottomLeft: Radius.circular(30)),
+                      image: DecorationImage(
+                          image: NetworkImageWithRetry(
+                              recipeList[widget.indexOfFood].image),
+                          fit: BoxFit.cover),
+                    ),
                   )),
             ),
           ),
@@ -94,7 +93,7 @@ class _CookingScreenState extends State<CookingScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(
-                     recipeList[widget.indexOfFood].description ?? ' ',
+                      recipeList[widget.indexOfFood].description ?? ' ',
                       textAlign: TextAlign.start,
                       style: kNepaliTextStyle.copyWith(
                           fontWeight: FontWeight.bold, color: Colors.grey),
@@ -143,41 +142,41 @@ class _CookingScreenState extends State<CookingScreen> {
               return SingleChildScrollView(
                 physics: NeverScrollableScrollPhysics(),
                 child: Column(
-                    children: <Widget>[
-                      Card(
-                          elevation: 7,
-                          shape:
-                              CircleBorder(side: BorderSide(color: kMainColor)),
-                          child: Center(
-                              child: FutureBuilder<Widget>(
-                future: getImageUrl(
-                    recipeList[widget.indexOfFood]
-                        .ingredients
-                        .keys
-                        .elementAt(index)),
-                builder: (context, futureSnapshot) {
-                  if (!futureSnapshot.hasData) {
-                    return CupertinoActivityIndicator();
-                  }
-                  return futureSnapshot.data;
-                }))),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FittedBox(
-                          alignment: Alignment.center,
-                          child: Container(
-                              child: Text(
-                            recipeList[widget.indexOfFood]
-                                .ingredients
-                                .values
-                                .elementAt(index),
-                            style: kNepaliTextStyle.copyWith(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          )),
-                        ),
-                      )
-                    ],
-                  ),
+                  children: <Widget>[
+                    Card(
+                        elevation: 7,
+                        shape:
+                            CircleBorder(side: BorderSide(color: kMainColor)),
+                        child: Center(
+                            child: FutureBuilder<Widget>(
+                                future: getImageUrl(
+                                    recipeList[widget.indexOfFood]
+                                        .ingredients
+                                        .keys
+                                        .elementAt(index)),
+                                builder: (context, futureSnapshot) {
+                                  if (!futureSnapshot.hasData) {
+                                    return CupertinoActivityIndicator();
+                                  }
+                                  return futureSnapshot.data;
+                                }))),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FittedBox(
+                        alignment: Alignment.center,
+                        child: Container(
+                            child: Text(
+                          recipeList[widget.indexOfFood]
+                              .ingredients
+                              .values
+                              .elementAt(index),
+                          style: kNepaliTextStyle.copyWith(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        )),
+                      ),
+                    )
+                  ],
+                ),
               );
             },
                 childCount:

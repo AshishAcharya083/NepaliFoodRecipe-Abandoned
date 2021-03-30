@@ -115,7 +115,7 @@ class _WaterScreenState extends State<WaterScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 40.0),
                         child: ButtonTheme(
                           height: 60,
-                          child: RaisedButton(
+                          child: MaterialButton(
                               elevation: 5,
                               onPressed: () async {
                                 await _scheduleNotification(_dateTime);
@@ -151,7 +151,7 @@ class _WaterScreenState extends State<WaterScreen> {
                   shape: RoundedRectangleBorder(
                       side: BorderSide(width: 4, color: Colors.lightBlue),
                       borderRadius: BorderRadius.circular(20)),
-                  child: RaisedButton(
+                  child: MaterialButton(
                     elevation: 5,
                     onPressed: () async {
                       _displaySnackBar(context,
@@ -169,7 +169,7 @@ class _WaterScreenState extends State<WaterScreen> {
                       horizontal: 40.0, vertical: 15),
                   child: ButtonTheme(
                     height: 60,
-                    child: RaisedButton(
+                    child: MaterialButton(
                         elevation: 5,
                         onPressed: () async {
                           await flutterLocalNotificationsPlugin.cancel(0);
@@ -202,7 +202,10 @@ class _WaterScreenState extends State<WaterScreen> {
 
   _displaySnackBar(BuildContext context, {String snackMessage}) {
     final snackBar = SnackBar(content: Text(snackMessage));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // _scaffoldKey.currentState.showSnackBar(snackBar);
+    //showSnackBar is deprecated
   }
 
   Future<void> _scheduleNotification(DateTime scheduledDate) async {
