@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food/models/favorites_list.dart';
-import 'package:food/screens/feature_screen.dart';
+
 import 'package:provider/provider.dart';
 import 'homePage.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +23,6 @@ class _LandingPageState extends State<LandingPage> {
       DeviceOrientation.portraitDown
       // DeviceOrientation.landscapeLeft,
     ]);
-   
   }
 
   @override
@@ -41,21 +39,17 @@ class _LandingPageState extends State<LandingPage> {
   List tabs = [
     HomeScreen(),
     ListScreen(),
-    FeatureScreen(),
   ];
 
   int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider
-    (
-        providers: [
+    return MultiProvider(
+      providers: [
         ChangeNotifierProvider(create: (_) => FavoritesList()),
-       
       ],
-     
-          child: SafeArea(
+      child: SafeArea(
         child: Scaffold(
           bottomNavigationBar: CurvedNavigationBar(
             height: 50,
@@ -67,10 +61,6 @@ class _LandingPageState extends State<LandingPage> {
               ),
               Icon(
                 Icons.list,
-                size: 30,
-              ),
-              Icon(
-                FontAwesomeIcons.userMd,
                 size: 30,
               ),
             ],
