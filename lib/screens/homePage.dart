@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_image/network.dart';
+
 import 'package:food/components/searchbar.dart';
 import 'package:food/components/cards.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<int> meat = [];
   List<int> popular = [];
   List<int> fruitAndDrinks = [];
-  Widget _currentAd ;
+  Widget _currentAd;
 
   void initState() {
     super.initState();
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController = TabController(vsync: this, length: 4);
     getFood();
     Provider.of<FavoritesList>(context, listen: false).initiatePref();
-    
+
     setState(() {
       _currentAd = myBannerAd();
     });
@@ -45,11 +45,9 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    
     return Consumer<FavoritesList>(builder: (context, snapshot, _) {
       return Scaffold(
         appBar: AppBar(
-          
           titleSpacing: 12,
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -57,16 +55,13 @@ class _HomeScreenState extends State<HomeScreen>
               style: kEnglishTextStyle.copyWith(
                   color: Colors.black, fontSize: 30, letterSpacing: 0)),
         ),
-        
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            
             Expanded(
                 child: ListView(
-                  physics: BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               children: <Widget>[
-                
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 10.0, vertical: 10),
@@ -96,11 +91,8 @@ class _HomeScreenState extends State<HomeScreen>
             return Container(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: FadeInImage(
-                  placeholder: AssetImage('images/burger.jpg'),
-                  image: NetworkImageWithRetry(
-                    recipeList[i].image ?? errorImage,
-                  ),
+                child: Image.network(
+                  recipeList[i].image,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -165,8 +157,8 @@ class _HomeScreenState extends State<HomeScreen>
                                     )));
                       },
                       child: CategoryCard(
-                          networkImage:
-                              recipeList[popular[index]].image ?? errorImage,
+                          networkImage: recipeList[popular[index]].image,
+                          // ?? errorImage,
                           foodName: recipeList[popular[index]].name),
                     ),
                   );
@@ -188,8 +180,8 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: CategoryCard(
-                        networkImage:
-                            recipeList[vegetable[index]].image ?? errorImage,
+                        networkImage: recipeList[vegetable[index]].image,
+                        // ?? errorImage,
                         foodName: recipeList[vegetable[index]].name),
                   ),
                 );
@@ -236,8 +228,8 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: CategoryCard(
-                        networkImage:
-                            recipeList[meat[index]].image ?? errorImage,
+                        networkImage: recipeList[meat[index]].image,
+                        // ?? errorImage,
                         foodName: recipeList[meat[index]].name),
                   ),
                 );
